@@ -35,9 +35,6 @@
   (add-hook 'before-save-hook 'gofmt-before-save) ; gofmt before every save
   (add-hook 'go-mode-hook 'm-go-mode))
 
-
-;; (setenv "GOROOT" (concat (getenv "HOME") "/go1.10"))
-
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 (require 'golint)
 
