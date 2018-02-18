@@ -5,6 +5,11 @@
   (smex-initialize)
   (counsel-mode 1))
 
+
+;; fix for counsel-projectile warning when bytecompile
+(require 'subr-x)
+(require 'cl-macs)
+
 (use-package counsel-projectile
   :ensure t
   :config
