@@ -14,26 +14,12 @@
 
 (use-package go-mode
   :ensure t
-  :mode "\\.go\\'"
 
   :init
   (setq gofmt-command "goimports")
   (setenv "GOPATH" (concat (getenv "HOME") "/code/go"))
 
-  :bind (("M-." . godef-jump)
-	 ("M-," . pop-tag-mark))
-
-  :config
-  (defun m-go-mode ()
-  "My personal go-mode setup"
-  
-  (go-eldoc-setup)
-  (electric-pair-mode 1)
-  (auto-complete-mode 1)
-  (highlight-parentheses-mode 1))
-  
-  (add-hook 'before-save-hook 'gofmt-before-save) ; gofmt before every save
-  (add-hook 'go-mode-hook 'm-go-mode))
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 (require 'golint)
