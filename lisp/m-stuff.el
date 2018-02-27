@@ -24,4 +24,13 @@
 (electric-pair-mode 1)
 (show-paren-mode 1)
 
+(setq compilation-scroll-output 'first-error) ;; or t
+
+(use-package thrift
+	:ensure t)
+
+(use-package cmake-mode
+	:ensure t)
+
+
 (provide 'm-stuff)
