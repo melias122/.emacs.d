@@ -23,7 +23,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (electric-pair-mode 1)
 (show-paren-mode 1)
-
+(global-hl-line-mode 1)
 (setq compilation-scroll-output 'first-error) ;; or t
 
 (use-package thrift
