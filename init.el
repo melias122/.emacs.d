@@ -13,19 +13,6 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package ycmd
-  :ensure t
-  :init
-  (add-hook 'after-init-hook #'global-ycmd-mode)
-  (set-variable 'ycmd-server-command '("python" "/Users/m/code/ycmd/ycmd/")))
-
-(use-package company-ycmd
-  :ensure t
-  :config
-  (company-ycmd-setup))
-
-(require 'ycmd-eldoc)
-(add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup)
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")
