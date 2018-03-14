@@ -32,5 +32,15 @@
 (use-package cmake-mode
 	:ensure t)
 
+(use-package protobuf-mode
+	:ensure t)
+
+(use-package dumb-jump
+	:ensure t)
+
+(setq dumb-jump-selector 'ivy)
+;; (setq dumb-jump-force-searcher 'ag)
+;; (setq dumb-jump-prefer-searcher 'rg)
+
 
 (provide 'm-stuff)
