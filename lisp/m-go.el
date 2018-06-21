@@ -1,15 +1,12 @@
 (use-package exec-path-from-shell
   :ensure t
-  :defer t
   :config
   (exec-path-from-shell-initialize))
 
 (use-package go-eldoc
-  :defer t
   :ensure t)
 
 (use-package go-guru
-  :defer t
   :ensure t)
 
 (use-package go-mode
