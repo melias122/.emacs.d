@@ -1,5 +1,7 @@
 ;; Stuff that belongs nowhere for now.
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (use-package company
   :ensure t
   :config
