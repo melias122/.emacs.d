@@ -27,6 +27,7 @@
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (setq ivy-height 10)
-  (setq ivy-re-builders-alist '((t  . ivy--regex-ignore-order))))
+  (setq ivy-re-builders-alist '((t  . ivy--regex-ignore-order)))
+  (setq ivy-initial-inputs-alist nil))
 
 (provide 'm-ivy)
