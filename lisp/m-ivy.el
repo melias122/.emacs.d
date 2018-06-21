@@ -13,7 +13,8 @@
 (use-package counsel-projectile
   :ensure t
   :config
-  (counsel-projectile-mode 1))
+  (counsel-projectile-mode 1)
+  (setq counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc))
 
 (use-package swiper
   :ensure t
