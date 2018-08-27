@@ -2,7 +2,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+  '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;; Bootstrap use-package
@@ -11,7 +11,7 @@
   (package-install 'use-package))
 
 (eval-when-compile
-  (require 'use-package))
+	(require 'use-package))
 
 
 (let ((file-name-handler-alist nil))
