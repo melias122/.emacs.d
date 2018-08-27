@@ -2,3 +2,10 @@ elpa
 projectile-bookmarks.eld
 smex-items
 emacs-custom.el
+ac-comphist.dat
+anaconda-mode/
+auto-save-list/
+bookmarks
+eshell
+recentf
+tramp
