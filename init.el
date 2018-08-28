@@ -13,6 +13,8 @@
 (eval-when-compile
 	(require 'use-package))
 
+(when (memq window-system '(mac ns x))
+  (set-default-font "Monaco 15"))
 
 
 (let ((file-name-handler-alist nil))
