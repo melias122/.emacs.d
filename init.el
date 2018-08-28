@@ -13,6 +13,14 @@
 (eval-when-compile
 	(require 'use-package))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+
+  (exec-path-from-shell-copy-env "GOPATH"))
+
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -24,6 +32,6 @@
   (require 'm-fonts)
   (require 'm-ivy)
   (require 'm-project)
-  (require 'm-go)
   (require 'm-json)
-  (require 'm-stuff))
+  (require 'm-stuff)
+  (require 'm-programming))
