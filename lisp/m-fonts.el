@@ -1,3 +1,4 @@
-;; (set-default-font "Monaco 12")      ; Set font and size
+(when (memq window-system '(mac ns))
+  (set-default-font "Monaco 15"))
 
 (provide 'm-fonts)

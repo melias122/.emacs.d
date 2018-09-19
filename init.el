@@ -13,20 +13,56 @@
 (eval-when-compile
 	(require 'use-package))
 
-(when (memq window-system '(mac ns x))
-  (set-default-font "Monaco 15"))
+(use-package diminish
+  :ensure t)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "PATH"))
+
 
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")
-  (require 'm-custom)
   (require 'm-backups)
   (require 'm-frame)
   (require 'm-keybindings)
-  (require 'm-themes)
   (require 'm-fonts)
   (require 'm-ivy)
-  (require 'm-project)
   (require 'm-json)
-  (require 'm-stuff)
   (require 'm-programming))
+
+;; put emacs custom-set-variables to separate file
+(setq custom-file "~/.emacs.d/emacs-custom.el")
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+(load custom-file)
+
+;; package to try (suggested by Fionn)
+;;
+;; idle-highlight-mode
+;; which-key
+;; expand-region
+;; iedit
+;; visual-regexp
+;; avy
+;; hydra
+;; find-file-in-project (only really need "find-file-in-current-directory", very useful outside repos)
+;; ws-butler
+;; wgrep
+;; all
+
+(defun compile-streamsdk ()
+  "Compile StreamSDK."
+  (interactive)
+  (require 'magit)
+  (let ((project-dir (magit-toplevel)))
+    (if (null project-dir)
+        (message "Not in a project directory!")
+      (let ((build (completing-read "build type: " (directory-files (magit-toplevel) t "\.build-.*$") nil t)))
+        (switch-to-buffer "*compilation*")
+        (cd build)
+        (compile "make -j 7")))))

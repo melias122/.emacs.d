@@ -1,9 +1,3 @@
-;; (require 'ido)
-
-;;(setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (ido-mode 1)
-
 ;; Make mac keyboard bindings not suck
 (when (string-equal system-type "darwin")
   (setq mac-option-modifier 'super)
