@@ -18,4 +18,10 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq compilation-scroll-output 'first-error) ;; or t
 
+(use-package which-key
+  :ensure t
+  :diminish
+  :config
+  (which-key-mode))
+
 (provide 'm-frame)
