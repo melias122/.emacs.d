@@ -40,6 +40,11 @@
   :config
   (global-highlight-parentheses-mode 1))
 
+(use-package idle-highlight-mode
+  :ensure t
+  :diminish
+  :hook (prog-mode . idle-highlight-mode))
+
 (electric-pair-mode 1)
 (show-paren-mode 1)
 (global-hl-line-mode 1)
