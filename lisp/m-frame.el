@@ -24,4 +24,7 @@
   :config
   (which-key-mode))
 
+;; set default with to 4 instead of 8
+(setq default-tab-width 4)
+
 (provide 'm-frame)
