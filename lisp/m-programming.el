@@ -105,37 +105,6 @@
 ;;
 ;; c/c++-mode
 ;;
-(use-package rtags
-  :disabled t
-  :ensure t
-  :config
-  (setq rtags-autostart-diagnostics t)
-  (rtags-enable-standard-keybindings))
-
-(use-package ivy-rtags
-  :disabled t
-  :ensure t)
-
-(use-package company-rtags
-  :disabled t
-  :ensure t
-  :config
-  (setq rtags-completions-enabled t)
-  (eval-after-load 'company
-    '(add-to-list
-       'company-backends 'company-rtags)))
-
-(use-package flycheck-rtags
-  :disabled t
-  :ensure t
-  :config
-  (defun my-flycheck-rtags-setup ()
-    (flycheck-select-checker 'rtags)
-    (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-    (setq-local flycheck-check-syntax-automatically nil))
-  ;; c-mode-common-hook is also called by c++-mode
-  (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup))
-
 (use-package lsp-mode
   :ensure t)
 
@@ -177,21 +146,6 @@
   :ensure t
   :config
   (smart-jump-setup-default-registers)
-
-  (smart-jump-register
-    :modes '(c-mode c++-mode)
-    :jump-fn 'rtags-find-symbol-at-point
-    :pop-fn 'rtags-location-stack-back
-    :refs-fn 'rtags-find-all-references-at-point
-    :should-jump (lambda ()
-                   (and
-                     (fboundp 'rtags-executable-find)
-                     (rtags-executable-find "rc")
-                     (rtags-is-indexed)))
-    :heuristic 'point
-    :async t
-    :order 1)
-
   (setq dumb-jump-selector 'ivy))
 
 (provide 'm-programming)
