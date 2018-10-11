@@ -103,7 +103,7 @@
   :ensure t)
 
 ;;
-;; c/c++-mode
+;; lsp
 ;;
 (use-package lsp-mode
   :ensure t)
@@ -113,21 +113,23 @@
   :config
   (push 'company-lsp company-backends))
 
+;;
+;; c/c++-mode
+;;
 (use-package ccls
   :disabled t
   :ensure t
   :init
   (setq ccls-executable "/usr/local/bin/ccls")
-  (setq ccls-extra-init-params '(:clang (:excludeArgs ("-mthumb-interwork" "-march" "-mfpu" "-mfloat"))
+  (setq ccls-extra-init-params '(:clang (:excludeArgs ("-mthumb-interwork" "-march" "-mfpu=neon" "-mfloat-abi=hard")
+                                          :pathMappings ("/root/src/github.com/bang-olufsen/ase:/home/m/code/beo")
+                                          )
                                   :index (:comments 2)
                                   :completion (:detailedLabel t)))
-
   :hook ((c-mode c++-mode) . #'lsp-ccls-enable)
 
   :config
   (setq ccls-sem-highlight-method 'font-lock)
-  ;; (ccls-use-default-rainbow-sem-highlight)
-
   (with-eval-after-load 'projectile
     (add-to-list 'projectile-globally-ignored-directories ".ccls-cache")))
 
