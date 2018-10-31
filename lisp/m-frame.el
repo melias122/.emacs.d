@@ -10,10 +10,18 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; TODO: night/day theme
-(use-package atom-one-dark-theme
+(use-package doom-themes
   :ensure t
   :config
-  (load-theme 'atom-one-dark 1))
+  (load-theme 'doom-one 1)
+
+  (use-package solaire-mode
+    :ensure t
+    :hook ( ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+            (ediff-prepare-buffer . solaire-mode)
+            (minibuffer-setup . solaire-mode-in-minibuffer))
+    :config
+    (solaire-mode-swap-bg)))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq compilation-scroll-output 'first-error) ;; or t
