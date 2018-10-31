@@ -26,6 +26,14 @@
   :config
   (projectile-global-mode 1)
 
+  (setq projectile-enable-caching t)
+  (setq projectile-globally-ignored-directories
+    (append '(
+               ".ccls-cache"
+               ".cquery_cached_index"
+               )
+      projectile-globally-ignored-directories))
+
   (use-package counsel-projectile
     :ensure t
     :bind-keymap ("C-c p" . projectile-command-map)
