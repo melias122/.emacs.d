@@ -29,12 +29,15 @@
   (use-package counsel-projectile
     :ensure t
     :bind-keymap ("C-c p" . projectile-command-map)
+    :bind ( ("C-r" . counsel-projectile-rg)
+            ("C-s" . counsel-grep-or-swiper))
     :init
     ;; fix for counsel-projectile warning when bytecompile
     (require 'subr-x)
     (require 'cl-macs)
     :config
     (counsel-projectile-mode 1)
-    (setq counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc)))
+    (setq counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc)
+    (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s")))
 
 (provide 'm-ivy)
