@@ -68,22 +68,39 @@
 ;;
 (use-package yasnippet
   :ensure t
-  :diminish
+  :diminish yas-minor-mode
   :config
-  (yas-global-mode 1))
+  (yas-global-mode t))
 
 (use-package company
   :ensure t
   :bind (:map company-active-map
           ("C-p" . company-select-previous)
           ("C-n" . company-select-next))
-  :init
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .5)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+
+  ;; https://onze.io/emacs/c++/2017/03/16/emacs-cpp.html
+  :preface
+  ;; enable yasnippet everywhere
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+  (defun company-mode/backend-with-yas (backend)
+    (if (or
+          (not company-mode/enable-yas)
+          (and (listp backend) (member 'company-yasnippet backend)))
+      backend
+      (append (if (consp backend) backend (list backend))
+        '(:with company-yasnippet))))
+
   :config
-  (global-company-mode))
+  (global-company-mode t)
+
+
+  (setq company-tooltip-limit 20)                        ; bigger popup window
+  (setq company-idle-delay .5)                           ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                            ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command))   ; start autocompletion only after typing
+
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 ;;
 ;; go-mode
