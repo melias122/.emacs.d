@@ -123,27 +123,33 @@
 ;; lsp
 ;;
 (use-package lsp-mode
-  :ensure t)
-
-(use-package company-lsp
   :ensure t
   :config
-  (push 'company-lsp company-backends))
+  (use-package company-lsp
+    :ensure t
+    :config
+    (push 'company-lsp company-backends))
+
+  (use-package lsp-ui
+    :ensure t
+    :hook (lsp-mode . lsp-ui-mode)))
 
 ;;
 ;; c/c++-mode
 ;;
 (use-package ccls
-  :disabled t
   :ensure t
   :init
   (setq ccls-executable "/usr/local/bin/ccls")
-  (setq ccls-extra-init-params '(:clang (:excludeArgs ("-mthumb-interwork" "-march" "-mfpu=neon" "-mfloat-abi=hard")
-                                          :pathMappings ("/root/src/github.com/bang-olufsen/ase:/home/m/code/beo")
-                                          )
+  (setq ccls-extra-init-params '(:clang (:excludeArgs ("-mthumb-interwork"
+                                                        "-march=armv7-a"
+                                                        "-mfpu=neon"
+                                                        "-mfloat-abi=hard"
+                                                        "-fno-inline-small-functions")
+                                          :pathMappings ("/root/src/github.com/bang-olufsen/ase:/Users/m/code/beo/ase"))
                                   :index (:comments 2)
                                   :completion (:detailedLabel t)))
-  :hook ((c-mode c++-mode) . #'lsp-ccls-enable)
+  :hook ((c-mode c++-mode) . lsp-ccls-enable)
 
   :config
   (setq ccls-sem-highlight-method 'font-lock)
@@ -151,6 +157,7 @@
     (add-to-list 'projectile-globally-ignored-directories ".ccls-cache")))
 
 (use-package cquery
+  :disabled t
   :ensure t
   :init
   (setq cquery-executable "/usr/local/bin/cquery")
