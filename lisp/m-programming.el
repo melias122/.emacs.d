@@ -130,31 +130,39 @@
     :config
     (push 'company-lsp company-backends))
 
-  (use-package lsp-ui
-    :ensure t
-    :hook (lsp-mode . lsp-ui-mode)))
+  ;; (use-package lsp-ui
+  ;; :ensure t
+  ;; :hook (lsp-mode . lsp-ui-mode))
+  )
 
 ;;
 ;; c/c++-mode
 ;;
 (use-package ccls
   :ensure t
+  :defines projectile-project-root-files-top-down-recurring
   :init
+  ;; TODO(m): Fix absolute HOME
   (setq ccls-executable "/usr/local/bin/ccls")
-  (setq ccls-extra-init-params '(:clang (:excludeArgs ("-mthumb-interwork"
+  (setq ccls-extra-init-params '( :cacheDirectory ("/home/m/.cache/ccls")
+                                  :clang (:excludeArgs ("-mthumb-interwork"
                                                         "-march=armv7-a"
                                                         "-mfpu=neon"
                                                         "-mfloat-abi=hard"
                                                         "-fno-inline-small-functions")
-                                          :pathMappings ("/root/src/github.com/bang-olufsen/ase:/Users/m/code/beo/ase"))
+                                          :pathMappings ( "/root/src/github.com/bang-olufsen/ase:/home/m/code/beo/ase"
+                                                          "/sysroots/beoase2gvas810/usr/include:/home/m/code/beo/ase/include"
+                                                          "/sysroots/beoase2s810/usr/include:/home/m/code/beo/ase/include"
+                                                          "/sysroots/beoase/usr/include:/home/m/code/beo/ase/include"))
                                   :index (:comments 2)
                                   :completion (:detailedLabel t)))
   :hook ((c-mode c++-mode) . lsp-ccls-enable)
-
   :config
   (setq ccls-sem-highlight-method 'font-lock)
   (with-eval-after-load 'projectile
-    (add-to-list 'projectile-globally-ignored-directories ".ccls-cache")))
+    (setq projectile-project-root-files-top-down-recurring
+      (append '("compile_commands.json")
+        projectile-project-root-files-top-down-recurring))))
 
 (use-package cquery
   :disabled t
