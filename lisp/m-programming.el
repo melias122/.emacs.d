@@ -49,7 +49,6 @@
 (show-paren-mode 1)
 (global-hl-line-mode 1)
 
-
 ;;
 ;; git
 ;;
@@ -120,20 +119,39 @@
   :ensure t)
 
 ;;
-;; lsp
+;; Language Server Protocol (LSP)
 ;;
-(use-package lsp-mode
+
+;; fix for ccls/lsp
+(use-package f :ensure t)
+(use-package ht :ensure t)
+
+(use-package lsp
+  :ensure lsp-mode
+  :hook ((c-mode c++-mode) . lsp)
+  :init
+  ;; (setf lsp-eldoc-render-all nil)
+  (setq lsp-inhibit-message t)
+  (setq lsp-message-project-root-warning t)
+  :config
+  (require 'lsp-clients))
+
+(use-package lsp-ui
+  :disabled t
+  :ensure t
+  :after (lsp)
+  :hook (lsp-mode . lsp-ui-mode)
+  :init
+  (setf lsp-ui-sideline-enable nil)
+  (setf lsp-ui-doc-enable nil)
+  :config
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))
+
+(use-package company-lsp
   :ensure t
   :config
-  (use-package company-lsp
-    :ensure t
-    :config
-    (push 'company-lsp company-backends))
-
-  ;; (use-package lsp-ui
-  ;; :ensure t
-  ;; :hook (lsp-mode . lsp-ui-mode))
-  )
+  (push 'company-lsp company-backends))
 
 ;;
 ;; c/c++-mode
@@ -144,34 +162,23 @@
   :init
   ;; TODO(m): Fix absolute HOME
   (setq ccls-executable "/usr/local/bin/ccls")
-  (setq ccls-extra-init-params '( :cacheDirectory ("/home/m/.cache/ccls")
-                                  :clang (:excludeArgs ("-mthumb-interwork"
-                                                        "-march=armv7-a"
-                                                        "-mfpu=neon"
-                                                        "-mfloat-abi=hard"
-                                                        "-fno-inline-small-functions")
-                                          :pathMappings ( "/root/src/github.com/bang-olufsen/ase:/home/m/code/beo/ase"
-                                                          "/sysroots/beoase2gvas810/usr/include:/home/m/code/beo/ase/include"
-                                                          "/sysroots/beoase2s810/usr/include:/home/m/code/beo/ase/include"
-                                                          "/sysroots/beoase/usr/include:/home/m/code/beo/ase/include"))
-                                  :index (:comments 2)
-                                  :completion (:detailedLabel t)))
-  :hook ((c-mode c++-mode) . lsp-ccls-enable)
+  (setq ccls-initialization-options '( :clang (:excludeArgs ("-mthumb-interwork"
+                                                              "-march=armv7-a"
+                                                              "-mfpu=neon"
+                                                              "-mfloat-abi=hard"
+                                                              "-fno-inline-small-functions")
+                                                :pathMappings ( "/root/src/github.com/bang-olufsen/ase:/home/m/code/beo/ase"
+                                                                "/sysroots/beoase2gvas810/usr/include:/home/m/code/beo/ase/include"
+                                                                "/sysroots/beoase2s810/usr/include:/home/m/code/beo/ase/include"
+                                                                "/sysroots/beoase/usr/include:/home/m/code/beo/ase/include"))
+                                       :index (:comments 2)
+                                       :completion (:detailedLabel t)))
   :config
   (setq ccls-sem-highlight-method 'font-lock)
   (with-eval-after-load 'projectile
     (setq projectile-project-root-files-top-down-recurring
       (append '("compile_commands.json")
         projectile-project-root-files-top-down-recurring))))
-
-(use-package cquery
-  :disabled t
-  :ensure t
-  :init
-  (setq cquery-executable "/usr/local/bin/cquery")
-  :hook ((c-mode c++-mode) . #'lsp-cquery-enable)
-  :config
-  (setq cquery-sem-highlight-method 'font-lock))
 
 ;;
 ;; jump
