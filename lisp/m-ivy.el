@@ -26,8 +26,7 @@
 (use-package counsel-projectile
   :ensure t
   :bind-keymap ("C-c p" . projectile-command-map)
-  :bind ( ("C-r" . counsel-projectile-rg)
-          ("C-s" . counsel-grep-or-swiper))
+  :bind (("C-r" . counsel-projectile-rg))
   :init
   ;; fix for counsel-projectile warning when bytecompile
   (require 'subr-x)
