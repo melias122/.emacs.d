@@ -126,9 +126,9 @@
 (use-package f :ensure t)
 (use-package ht :ensure t)
 
-(use-package lsp
-  :ensure lsp-mode
-  :hook ((c-mode c++-mode) . lsp)
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
   :init
   ;; (setf lsp-eldoc-render-all nil)
   (setq lsp-inhibit-message t)
@@ -159,6 +159,7 @@
 (use-package ccls
   :ensure t
   :defines projectile-project-root-files-top-down-recurring
+  :hook ((c-mode c++-mode) . (lambda () (require 'ccls) (lsp)))
   :init
   ;; TODO(m): Fix absolute HOME
   (setq ccls-executable "/usr/local/bin/ccls")
