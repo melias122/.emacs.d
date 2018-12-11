@@ -12,6 +12,10 @@
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
+(use-package uniquify
+  :config
+  (setq uniquify-buffer-name-style 'forward))
+
 ;; TODO: night/day theme
 (use-package doom-themes
   :ensure t
