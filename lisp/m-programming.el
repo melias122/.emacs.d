@@ -74,8 +74,8 @@
 (use-package company
   :ensure t
   :bind (:map company-active-map
-          ("C-p" . company-select-previous)
-          ("C-n" . company-select-next))
+          ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
+          ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1)))
 
   ;; https://onze.io/emacs/c++/2017/03/16/emacs-cpp.html
   :preface
@@ -93,11 +93,8 @@
   :config
   (global-company-mode t)
 
-
-  (setq company-tooltip-limit 20)                        ; bigger popup window
-  (setq company-idle-delay .5)                           ; decrease delay before autocompletion popup shows
+  (setq company-idle-delay nil)                          ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0)                            ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command))   ; start autocompletion only after typing
 
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
@@ -154,8 +151,9 @@
 
 (use-package company-lsp
   :ensure t
-  :config
-  (push 'company-lsp company-backends))
+  :commands company-lsp
+  :init
+  (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil))
 
 ;;
 ;; c/c++-mode
