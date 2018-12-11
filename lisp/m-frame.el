@@ -9,6 +9,9 @@
 ;; maximize emacs on start
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer))
+
 ;; TODO: night/day theme
 (use-package doom-themes
   :ensure t
