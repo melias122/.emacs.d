@@ -16,6 +16,10 @@
   :config
   (setq uniquify-buffer-name-style 'forward))
 
+(use-package saveplace
+  :config
+  (setq-default save-place t))
+
 ;; TODO: night/day theme
 (use-package doom-themes
   :ensure t
