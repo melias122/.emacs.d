@@ -130,24 +130,24 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp
-  :init
-  ;; (setf lsp-eldoc-render-all nil)
+  :config
+  (setq lsp-auto-guess-root t)
+  (setq lsp-eldoc-render-all nil)
   (setq lsp-inhibit-message t)
   (setq lsp-message-project-root-warning t)
-  :config
   (require 'lsp-clients))
 
 (use-package lsp-ui
-  :disabled t
   :ensure t
   :after (lsp)
   :hook (lsp-mode . lsp-ui-mode)
+  :bind (:map lsp-ui-mode-map
+          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+          ([remap xref-find-references] . lsp-ui-peek-find-references))
+
   :init
   (setf lsp-ui-sideline-enable nil)
-  (setf lsp-ui-doc-enable nil)
-  :config
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))
+  (setf lsp-ui-doc-enable nil))
 
 (use-package company-lsp
   :ensure t
@@ -161,23 +161,16 @@
 (use-package ccls
   :ensure t
   :defines projectile-project-root-files-top-down-recurring
-  :hook ((c-mode c++-mode) . (lambda () (require 'ccls) (lsp)))
+  :hook ((c-mode c++-mode) .
+          (lambda ()
+            (set (make-local-variable 'company-backends) '(company-lsp))
+            (require 'ccls)
+            (lsp)
+            (flymake-mode -1)
+            (eldoc-mode -1))
   :init
-  ;; TODO(m): Fix absolute HOME
   (setq ccls-executable "/usr/local/bin/ccls")
-  (setq ccls-initialization-options '( :clang (:excludeArgs ("-mthumb-interwork"
-                                                              "-march=armv7-a"
-                                                              "-mfpu=neon"
-                                                              "-mfloat-abi=hard"
-                                                              "-fno-inline-small-functions")
-                                                :pathMappings ( "/root/src/github.com/bang-olufsen/ase:/home/m/code/beo/ase"
-                                                                "/sysroots/beoase2gvas810/usr/include:/home/m/code/beo/ase/include"
-                                                                "/sysroots/beoase2s810/usr/include:/home/m/code/beo/ase/include"
-                                                                "/sysroots/beoase/usr/include:/home/m/code/beo/ase/include"))
-                                       :index (:comments 2)
-                                       :completion (:detailedLabel t)))
   :config
-  (setq ccls-sem-highlight-method 'font-lock)
   (with-eval-after-load 'projectile
     (setq projectile-project-root-files-top-down-recurring
       (append '("compile_commands.json")
