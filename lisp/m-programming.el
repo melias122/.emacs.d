@@ -54,7 +54,7 @@
 ;;
 (use-package git-gutter-fringe
   :ensure t
-  :diminish
+  :diminish git-gutter-mode
   :config (global-git-gutter-mode t))
 
 (use-package magit
@@ -100,6 +100,10 @@
   (setq company-begin-commands '(self-insert-command))   ; start autocompletion only after typing
 
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+
+(use-package eldoc
+  :ensure t
+  :diminish eldoc-mode)
 
 ;;
 ;; go-mode

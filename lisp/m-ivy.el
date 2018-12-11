@@ -1,5 +1,6 @@
 (use-package ivy
   :ensure t
+  :diminish ivy-mode
   :config
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
