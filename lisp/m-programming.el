@@ -73,10 +73,10 @@
 
 (use-package company
   :ensure t
-  :bind (:map company-active-map
+  :bind (("C-M-i" . company-indent-or-complete-common)
+          :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
-          ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1)))
-
+          ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
   ;; https://onze.io/emacs/c++/2017/03/16/emacs-cpp.html
   :preface
   ;; enable yasnippet everywhere
