@@ -167,7 +167,7 @@
             (require 'ccls)
             (lsp)
             (flymake-mode -1)
-            (eldoc-mode -1))
+            (eldoc-mode -1)))
   :init
   (setq ccls-executable "/usr/local/bin/ccls")
   :config
