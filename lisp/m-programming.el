@@ -138,16 +138,14 @@
   (require 'lsp-clients))
 
 (use-package lsp-ui
+  :disabled t
   :ensure t
   :after (lsp)
-  :hook (lsp-mode . lsp-ui-mode)
-  :bind (:map lsp-ui-mode-map
-          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-          ([remap xref-find-references] . lsp-ui-peek-find-references))
-
-  :init
+  :commands lsp-ui-mode
+  :config
   (setf lsp-ui-sideline-enable nil)
-  (setf lsp-ui-doc-enable nil))
+  (setf lsp-ui-doc-enable nil)
+  (setf lsp-ui-flycheck-enable nil))
 
 (use-package company-lsp
   :ensure t
