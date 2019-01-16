@@ -164,15 +164,9 @@
             (set (make-local-variable 'company-backends) '(company-lsp))
             (require 'ccls)
             (lsp)
-            (flymake-mode -1)
-            (eldoc-mode -1)))
+            (flymake-mode -1)))
   :init
-  (setq ccls-executable "/usr/local/bin/ccls")
-  :config
-  (with-eval-after-load 'projectile
-    (setq projectile-project-root-files-top-down-recurring
-      (append '("compile_commands.json")
-        projectile-project-root-files-top-down-recurring))))
+  (setq ccls-executable "/usr/local/bin/ccls"))
 
 ;;
 ;; jump
