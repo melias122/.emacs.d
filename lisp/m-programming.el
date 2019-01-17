@@ -93,9 +93,8 @@
   :config
   (global-company-mode t)
 
-  (setq company-idle-delay nil)                          ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                            ; remove annoying blinking
-
+  (setq company-idle-delay 1) ; popup delay
+  (setq company-echo-delay 0) ; removes blinking
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package eldoc
@@ -134,18 +133,7 @@
   (setq lsp-auto-guess-root t)
   (setq lsp-eldoc-render-all nil)
   (setq lsp-inhibit-message t)
-  (setq lsp-message-project-root-warning t)
-  (require 'lsp-clients))
-
-(use-package lsp-ui
-  :disabled t
-  :ensure t
-  :after (lsp)
-  :commands lsp-ui-mode
-  :config
-  (setf lsp-ui-sideline-enable nil)
-  (setf lsp-ui-doc-enable nil)
-  (setf lsp-ui-flycheck-enable nil))
+  (setq lsp-message-project-root-warning t))
 
 (use-package company-lsp
   :ensure t
@@ -158,23 +146,35 @@
 ;;
 (use-package ccls
   :ensure t
-  :defines projectile-project-root-files-top-down-recurring
-  :hook ((c-mode c++-mode) .
-          (lambda ()
-            (set (make-local-variable 'company-backends) '(company-lsp))
-            (require 'ccls)
-            (lsp)
-            (flymake-mode -1)))
+  :hook ((c-mode c++-mode) . (lambda () (require 'ccls) (lsp)))
   :init
   (setq ccls-executable "/usr/local/bin/ccls"))
 
 ;;
 ;; jump
 ;;
+(use-package ivy-xref
+  :ensure t
+  :config
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+(use-package ag ;; for smart-jump references
+  :ensure t)
+
 (use-package smart-jump
   :ensure t
   :config
+  (setq dumb-jump-selector 'ivy)
   (smart-jump-setup-default-registers)
-  (setq dumb-jump-selector 'ivy))
+  ;; (smart-jump-register :modes '(lsp-mode)
+  ;;   :jump-fn 'lsp-find-definition
+  ;;   :pop-fn 'pop-tag-mark
+  ;;   :refs-fn 'lsp-find-references
+  ;;   :heuristic 'point
+  ;;   :async 500
+  ;;   :order 1)
+
+  (setq smart-jump-lsp-mode-order 1)
+  (smart-jump-lsp-mode-register))
 
 (provide 'm-programming)
