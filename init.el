@@ -71,3 +71,13 @@
   :defer 1
   :config
   (paradox-enable))
+
+(use-package tramp
+  :defer t
+  :config
+  (put 'temporary-file-directory 'standard-value '("/tmp"))
+  :custom
+  (tramp-backup-directory-alist backup-directory-alist)
+  (tramp-default-method "ssh")
+  (tramp-default-proxies-alist nil)
+  (tramp-histfile-override "/tmp/.tramp_history"))
