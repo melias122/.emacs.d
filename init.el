@@ -81,3 +81,7 @@
   (tramp-default-method "ssh")
   (tramp-default-proxies-alist nil)
   (tramp-histfile-override "/tmp/.tramp_history"))
+
+(use-package delsel
+  :bind (:map mode-specific-map
+          ("C-g" . minibuffer-keyboard-quit)))
