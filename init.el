@@ -64,3 +64,10 @@
         (switch-to-buffer "*compilation*")
         (cd build)
         (compile "make -j 7")))))
+
+;;  paradox is modernized package menu
+(use-package paradox
+  :ensure t
+  :defer 1
+  :config
+  (paradox-enable))
