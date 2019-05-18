@@ -37,6 +37,7 @@
 
 (use-package highlight-parentheses
   :ensure t
+  :diminish
   :config
   (global-highlight-parentheses-mode 1))
 
