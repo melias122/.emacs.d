@@ -16,6 +16,9 @@
 (use-package diminish
   :ensure t)
 
+(use-package bind-key
+  :ensure t)
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac x ns))
   :ensure t
