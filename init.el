@@ -1,4 +1,14 @@
-;;
+;; Bootstrap
+
+;; Speed up startup
+(setq gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
+(add-hook 'after-init-hook
+          `(lambda ()
+             (setq gc-cons-threshold 800000
+                   gc-cons-percentage 0.1)
+             (garbage-collect)) t)
+
 ;; m's custom emacs configuration.
 ;;
 
