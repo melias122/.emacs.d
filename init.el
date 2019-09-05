@@ -82,7 +82,8 @@
   (tramp-backup-directory-alist backup-directory-alist)
   (tramp-default-method "ssh")
   (tramp-default-proxies-alist nil)
-  (tramp-histfile-override "/tmp/.tramp_history"))
+  (tramp-histfile-override "/tmp/.tramp_history")
+  (tramp-chunksize 2000))
 
 (use-package delsel
   :bind (:map mode-specific-map
