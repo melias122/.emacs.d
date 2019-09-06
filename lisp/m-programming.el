@@ -115,7 +115,7 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook ((c-mode c++-mode objc-mode) . lsp-deferred)
+  :hook ((c-mode c++-mode objc-mode go-mode) . lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
   (lsp-eldoc-render-all nil)
