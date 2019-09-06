@@ -128,37 +128,37 @@
 ;;
 ;; Language Server Protocol (LSP)
 ;;
-
-;; fix for ccls/lsp
-(use-package f :ensure t)
-(use-package ht :ensure t)
-
 (use-package lsp-mode
   :ensure t
-  :commands lsp
+  :commands (lsp lsp-deferred)
+  :hook ((c-mode c++-mode objc-mode) . lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
   (lsp-eldoc-render-all nil)
   (lsp-inhibit-message t)
   (lsp-message-project-root-warning t)
-  (lsp-prefer-flymake :none))
+  (lsp-prefer-flymake :none)
 
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp
-  :custom
-  (company-transformers nil)
-  (company-lsp-async t)
-  (company-lsp-cache-candidates nil))
+  :init
+  ;; fix for lsp
+  (use-package f :ensure t)
+  (use-package ht :ensure t)
+
+  (use-package company-lsp
+    :ensure t
+    :commands company-lsp
+    :custom
+    (company-transformers nil)
+    (company-lsp-async t)
+    (company-lsp-cache-candidates nil)))
 
 ;;
 ;; c/c++-mode
 ;;
 (use-package ccls
   :ensure t
-  :hook ((c-mode c++-mode) . (lambda () (require 'ccls) (lsp)))
-  :init
-  (setq ccls-executable "/usr/local/bin/ccls"))
+  :custom
+  (ccls-sem-highlight-method 'overlay))
 
 ;;
 ;; jump
