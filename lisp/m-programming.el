@@ -33,7 +33,8 @@
   :config
   (editorconfig-mode 1))
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(use-package simple
+  :hook ('before-save . delete-trailing-whitespace))
 
 (use-package highlight-parentheses
   :ensure t
@@ -46,9 +47,14 @@
   :diminish
   :hook (prog-mode . idle-highlight-mode))
 
-(electric-pair-mode 1)
-(show-paren-mode 1)
-(global-hl-line-mode 1)
+(use-package electric
+  :config (electric-pair-mode 1))
+
+(use-package paren
+  :config (show-paren-mode 1))
+
+(use-package hl-line
+  :config (global-hl-line-mode 1))
 
 ;;
 ;; git
@@ -130,17 +136,20 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp
-  :config
-  (setq lsp-auto-guess-root t)
-  (setq lsp-eldoc-render-all nil)
-  (setq lsp-inhibit-message t)
-  (setq lsp-message-project-root-warning t))
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-eldoc-render-all nil)
+  (lsp-inhibit-message t)
+  (lsp-message-project-root-warning t)
+  (lsp-prefer-flymake :none))
 
 (use-package company-lsp
   :ensure t
   :commands company-lsp
-  :init
-  (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil))
+  :custom
+  (company-transformers nil)
+  (company-lsp-async t)
+  (company-lsp-cache-candidates nil))
 
 ;;
 ;; c/c++-mode
@@ -156,8 +165,8 @@
 ;;
 (use-package ivy-xref
   :ensure t
-  :config
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+  :custom
+  (xref-show-xrefs-function 'ivy-xref-show-xrefs))
 
 (use-package ag ;; for smart-jump references
   :ensure t)
