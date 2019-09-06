@@ -45,7 +45,9 @@
 (use-package idle-highlight-mode
   :ensure t
   :diminish
-  :hook (prog-mode . idle-highlight-mode))
+  :hook (prog-mode . (lambda ()
+                       (unless (memq major-mode '(c-mode c++-mode objc-mode))
+                         (idle-highlight-mode)))))
 
 (use-package electric
   :config (electric-pair-mode 1))
