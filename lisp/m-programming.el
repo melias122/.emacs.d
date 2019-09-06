@@ -122,6 +122,7 @@
   (lsp-inhibit-message t)
   (lsp-message-project-root-warning t)
   (lsp-prefer-flymake :none)
+  (lsp-enable-snippet nil)
 
   :init
   ;; fix for lsp
