@@ -30,8 +30,7 @@
 (use-package editorconfig
   :ensure t
   :diminish
-  :config
-  (editorconfig-mode 1))
+  :config (editorconfig-mode 1))
 
 (use-package simple
   :hook ('before-save . delete-trailing-whitespace))
@@ -39,8 +38,7 @@
 (use-package highlight-parentheses
   :ensure t
   :diminish
-  :config
-  (global-highlight-parentheses-mode 1))
+  :config (global-highlight-parentheses-mode 1))
 
 (use-package idle-highlight-mode
   :ensure t
@@ -68,8 +66,8 @@
 
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status))
-  :diminish)
+  :diminish
+  :bind (("C-x g" . magit-status)))
 
 ;;
 ;; completion & snippets
@@ -86,12 +84,11 @@
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
           ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
-
+  :custom
+  (company-idle-delay 1) ; popup delay
+  (company-echo-delay 0) ; removes blinking
   :config
-  (global-company-mode t)
-
-  (setq company-idle-delay 1) ; popup delay
-  (setq company-echo-delay 0) ; removes blinking
+  (global-company-mode t))
 
 (use-package eldoc
   :ensure t
@@ -102,17 +99,15 @@
 ;;
 (use-package go-mode
   :ensure t
-  :init
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
+  :hook (before-save . gofmt-before-save)
+  :custom (gofmt-command "goimports")
   :config
   (use-package go-eldoc
     :ensure t)
   (use-package go-guru
+    :ensure t)
+  (use-package company-go
     :ensure t))
-
-(use-package company-go
-  :ensure t)
 
 ;;
 ;; Language Server Protocol (LSP)
@@ -130,8 +125,10 @@
 
   :init
   ;; fix for lsp
-  (use-package f :ensure t)
-  (use-package ht :ensure t)
+  (use-package f
+    :ensure t)
+  (use-package ht
+    :ensure t)
 
   (use-package company-lsp
     :ensure t
@@ -145,42 +142,28 @@
   :disabled t
   :ensure t
   :hook ((c-mode c++-mode objc-mode) . (lambda () (eglot-ensure)))
-  :custom
-  (company-transformers nil))
+  :custom (company-transformers nil))
 
 ;;
 ;; c/c++-mode
 ;;
 (use-package ccls
   :ensure t
-  :custom
-  (ccls-sem-highlight-method 'overlay))
+  :custom (ccls-sem-highlight-method 'overlay))
 
 ;;
 ;; jump
 ;;
 (use-package ivy-xref
   :ensure t
-  :custom
-  (xref-show-xrefs-function 'ivy-xref-show-xrefs))
+  :custom (xref-show-xrefs-function 'ivy-xref-show-xrefs))
 
 (use-package ag ;; for smart-jump references
   :ensure t)
 
 (use-package smart-jump
   :ensure t
-  :config
-  (setq dumb-jump-selector 'ivy)
-  (smart-jump-setup-default-registers)
-  ;; (smart-jump-register :modes '(lsp-mode)
-  ;;   :jump-fn 'lsp-find-definition
-  ;;   :pop-fn 'pop-tag-mark
-  ;;   :refs-fn 'lsp-find-references
-  ;;   :heuristic 'point
-  ;;   :async 500
-  ;;   :order 1)
-
-  (setq smart-jump-lsp-mode-order 1)
-  (smart-jump-lsp-mode-register))
+  :custom (dumb-jump-selector 'ivy)
+  :config (smart-jump-setup-default-registers))
 
 (provide 'm-programming)
