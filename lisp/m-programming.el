@@ -152,6 +152,13 @@
     (company-lsp-async t)
     (company-lsp-cache-candidates nil)))
 
+(use-package eglot
+  :disabled t
+  :ensure t
+  :hook ((c-mode c++-mode objc-mode) . (lambda () (eglot-ensure)))
+  :custom
+  (company-transformers nil))
+
 ;;
 ;; c/c++-mode
 ;;
