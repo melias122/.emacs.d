@@ -123,14 +123,6 @@
   (lsp-message-project-root-warning t)
   (lsp-prefer-flymake :none)
   (lsp-enable-snippet nil)
-
-  :init
-  ;; fix for lsp
-  (use-package f
-    :ensure t)
-  (use-package ht
-    :ensure t)
-
   (use-package company-lsp
     :ensure t
     :commands company-lsp
