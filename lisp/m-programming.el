@@ -75,10 +75,10 @@
 ;; completion & snippets
 ;;
 (use-package yasnippet
+  :disabled
   :ensure t
   :diminish yas-minor-mode
-  :config
-  (yas-global-mode t))
+  :config (yas-global-mode t))
 
 (use-package company
   :ensure t
@@ -86,25 +86,12 @@
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
           ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
-  ;; https://onze.io/emacs/c++/2017/03/16/emacs-cpp.html
-  :preface
-  ;; enable yasnippet everywhere
-  (defvar company-mode/enable-yas t
-    "Enable yasnippet for all backends.")
-  (defun company-mode/backend-with-yas (backend)
-    (if (or
-          (not company-mode/enable-yas)
-          (and (listp backend) (member 'company-yasnippet backend)))
-      backend
-      (append (if (consp backend) backend (list backend))
-        '(:with company-yasnippet))))
 
   :config
   (global-company-mode t)
 
   (setq company-idle-delay 1) ; popup delay
   (setq company-echo-delay 0) ; removes blinking
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package eldoc
   :ensure t
