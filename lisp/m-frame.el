@@ -1,12 +1,16 @@
 (use-package frame
-  :init
-
+  :ensure nil
   :bind ( ("C-z" . undo)
           ("C-x C-z" . nil)
           ("M-g" . goto-line)
           ("C-/" . comment-or-uncomment-line-or-region))
   :custom
   (inhibit-startup-screen 1)
+
+  ;; no really frame package, but keep them here
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
   :config
   (when (memq window-system '(mac ns))
     (set-default-font "Monaco 13")
@@ -19,21 +23,12 @@
   ;; maximize emacs on start
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-(use-package tool-bar
-  :config
-  (tool-bar-mode -1))
-
-(use-package scroll-bar
-  :config
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1))
-
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
 (use-package uniquify
-  :custom
-  (uniquify-buffer-name-style 'forward))
+  :config
+  (setq uniquify-buffer-name-style 'forward))
 
 (use-package saveplace
   :config
@@ -41,12 +36,9 @@
 
 ;; TODO: night/day theme
 (use-package doom-themes
-  :ensure t
   :config
   (load-theme 'doom-one 1)
-
   (use-package solaire-mode
-    :ensure t
     :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
             (ediff-prepare-buffer . solaire-mode)
             (minibuffer-setup . solaire-mode-in-minibuffer))
@@ -54,21 +46,12 @@
     (solaire-mode-swap-bg)))
 
 (use-package which-key
-  :ensure t
-  :defer 5
   :diminish
+  :defer 1
   :config
-  (which-key-mode))
-
-;;  paradox is modernized package menu
-(use-package paradox
-  :ensure t
-  :defer 2
-  :config
-  (paradox-enable))
+  (which-key-mode 1))
 
 (use-package tramp
-  :defer t
   :config
   (put 'temporary-file-directory 'standard-value '("/tmp"))
   :custom
@@ -86,6 +69,5 @@
 (use-package gnutls
   :custom
   (gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
 
 (provide 'm-frame)

@@ -1,113 +1,82 @@
 ;;
 ;; syntax
 ;;
-(use-package thrift
-  :ensure t
-  :defer t)
-
-(use-package cmake-font-lock
-  :ensure t
-  :defer t
-  :hook (cmake-mode . cmake-font-lock-activate))
-
-(use-package cmake-mode
-  :ensure t
-  :defer t
-  :mode ("CMakeLists.txt" "\\.cmake\\'"))
-
-(use-package protobuf-mode
-  :ensure t
-  :defer t)
+(use-package thrift :diminish)
+(use-package cmake-font-lock :hook (cmake-mode . cmake-font-lock-activate))
+(use-package cmake-mode :mode ("CMakeLists_src.txt"))
+(use-package protobuf-mode)
+(use-package yaml-mode)
 
 (use-package markdown-mode
-  :ensure t
-  :defer t
   :commands (markdown-mode gfm-mode)
   :mode ( ("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode))
   :custom (markdown-command "multimarkdown")
   :config
-  (use-package flymd
-    :ensure t))
-
-(use-package yaml-mode
-  :ensure t
-  :defer t)
+  (use-package flymd))
 
 ;;
 ;; editing
 ;;
 (use-package editorconfig
-  :ensure t
-  :diminish
-  :defer t
-  :custom
-  (default-tab-width 4)
+  :defer 1
   :config (editorconfig-mode 1))
 
 (use-package simple
-  :hook ('before-save . delete-trailing-whitespace)
+  :ensure nil
+  :hook (before-save . delete-trailing-whitespace)
   :config
   (line-number-mode 1))
 
 (use-package highlight-parentheses
-  :ensure t
+  :defer 1
   :diminish
-  :defer 5
   :config (global-highlight-parentheses-mode 1))
 
 (use-package idle-highlight-mode
-  :ensure t
-  :diminish
-  :defer 5
-  :hook (prog-mode . (lambda ()
-                       (unless (memq major-mode '(c-mode c++-mode objc-mode))
-                         (idle-highlight-mode)))))
+  :defer 1
+  :diminish idle-highlight-mode
+  :config (idle-highlight-mode 1))
 
 (use-package electric
-  :config (electric-pair-mode 1))
+  :hook (prog-mode . electric-pair-mode))
 
 (use-package paren
-  :config (show-paren-mode 1))
+  :hook (prog-mode . show-paren-mode))
 
 (use-package hl-line
+  :defer 1
   :config (global-hl-line-mode 1))
 
 ;;
 ;; compile
 ;;
 (use-package compile
- :custom
- (compilation-scroll-output 'first-error))
+  :custom (compilation-scroll-output 'first-error))
 
 ;;
 ;; git
 ;;
 (use-package git-gutter-fringe
-  :ensure t
+  :defer 1
   :diminish git-gutter-mode
-  :defer 5
-  :config (global-git-gutter-mode t))
+  :config (global-git-gutter-mode 1))
 
 (use-package magit
-  :ensure t
-  :diminish
-  :defer 3
-  :bind (("C-x g" . magit-status)))
+  :bind ("C-x g" . magit-status))
 
 ;;
 ;; completion & snippets
 ;;
 (use-package yasnippet
   :disabled
-  :ensure t
   :diminish yas-minor-mode
   :config (yas-global-mode t))
 
 (use-package company
-  :ensure t
-  :defer 5
+  :defer 0.5
+  :diminish
   :bind (("C-M-i" . company-indent-or-complete-common)
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
@@ -116,35 +85,26 @@
   (company-idle-delay 1) ; popup delay
   (company-echo-delay 0) ; removes blinking
   :config
-  (global-company-mode t))
+  (global-company-mode 1))
 
 (use-package eldoc
-  :ensure t
-  :diminish eldoc-mode
-  :defer 5)
+  :hook (prog-mode . eldoc-mode))
 
 ;;
 ;; go-mode
 ;;
 (use-package go-mode
-  :ensure t
-  :defer t
   :hook (before-save . gofmt-before-save)
-  :custom (gofmt-command "goimports")
-  :config
-  (use-package go-eldoc
-    :ensure t)
-  (use-package go-guru
-    :ensure t)
-  (use-package company-go
-    :ensure t))
+  :custom (gofmt-command "goimports"))
 
 ;;
 ;; Language Server Protocol (LSP)
 ;;
+
+;; On fresh install emacs is complaining that lsp/ccls needs spinner
+(use-package spinner)
+
 (use-package lsp-mode
-  :ensure t
-  :defer t
   :commands (lsp lsp-deferred)
   :hook ((c-mode c++-mode objc-mode go-mode) . lsp-deferred)
   :custom
@@ -154,9 +114,9 @@
   (lsp-message-project-root-warning t)
   (lsp-prefer-flymake :none)
   (lsp-enable-snippet nil)
+  (lsp-file-watch-threshold 128000)
   :config
   (use-package company-lsp
-    :ensure t
     :commands company-lsp
     :custom
     (company-transformers nil)
@@ -165,34 +125,35 @@
 
 (use-package eglot
   :disabled
-  :ensure t
-  :hook ((c-mode c++-mode objc-mode) . (lambda () (eglot-ensure)))
+  :hook ((c-mode c++-mode go-mode) . (lambda () (eglot-ensure)))
   :custom (company-transformers nil))
 
 ;;
 ;; c/c++-mode
 ;;
 (use-package ccls
-  :ensure t
-  :defer t
   :custom (ccls-sem-highlight-method 'overlay))
 
 ;;
 ;; jump
 ;;
 (use-package ivy-xref
-  :ensure t
-  :defer t
   :custom (xref-show-xrefs-function 'ivy-xref-show-xrefs))
 
-(use-package ag ;; for smart-jump references
-  :ensure t
-  :defer t)
+(use-package ag)
 
 (use-package smart-jump
-  :ensure t
-  :defer t
-  :custom (dumb-jump-selector 'ivy)
-  :config (smart-jump-setup-default-registers))
+  :defer 1
+  :custom
+  (dumb-jump-selector 'ivy)
+  (dumb-jump-prefer-searcher nil)
+  :config
+  (smart-jump-setup-default-registers))
+
+(use-package exec-path-from-shell
+  :defer 1
+  :if (memq window-system '(mac x ns))
+  :config
+  (exec-path-from-shell-initialize))
 
 (provide 'm-programming)

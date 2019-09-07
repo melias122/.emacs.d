@@ -1,4 +1,5 @@
 (use-package files
+  :ensure nil
   :custom
   (backup-directory-alist `(("." . "~/.saves")))
   (backup-by-copying t)
@@ -9,8 +10,10 @@
 
 ;; put emacs custom-set-variables to separate file
 (use-package cus-edit
+  :ensure nil
+  :custom
+  (custom-file "~/.emacs.d/emacs-custom.el")
   :config
-  (setq custom-file "~/.emacs.d/emacs-custom.el")
   (unless (file-exists-p custom-file)
     (write-region "" nil custom-file))
   (load custom-file))

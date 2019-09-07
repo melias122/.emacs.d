@@ -1,6 +1,8 @@
 ;;
-;; Martin Elias custom emacs configuration.
+;; m's custom emacs configuration.
 ;;
+
+;; Initialize package
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
@@ -11,16 +13,17 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; Set before loading use-package
+(eval-and-compile
+  (setq use-package-always-ensure t))
+
 (eval-when-compile
 	(require 'use-package))
-(use-package diminish :ensure t)
-(use-package bind-key :ensure t)
 
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac x ns))
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
+;; Required by use-package
+(use-package diminish)
+(use-package bind-key)
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")
