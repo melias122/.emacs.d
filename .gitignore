@@ -1,5 +1,6 @@
 projectile-bookmarks.eld
 smex-items
+amx-items
 emacs-custom.el
 ac-comphist.dat
 anaconda-mode/
@@ -8,3 +9,6 @@ bookmarks
 eshell
 recentf
 tramp
+.lsp-session*
+semanticdb
+transient
