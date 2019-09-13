@@ -1,16 +1,12 @@
 (use-package frame
   :ensure nil
+  :defer nil
   :bind ( ("C-z" . undo)
           ("C-x C-z" . nil)
           ("M-g" . goto-line)
           ("C-/" . comment-or-uncomment-line-or-region))
   :custom
   (inhibit-startup-screen 1)
-
-  ;; no really frame package, but keep them here
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
   :config
   (when (memq window-system '(mac ns))
     (set-default-font "Monaco 13")
@@ -21,14 +17,17 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
 
   ;; maximize emacs on start
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
 (use-package uniquify
-  :config
-  (setq uniquify-buffer-name-style 'forward))
+  :ensure nil
+  :custom (uniquify-buffer-name-style 'forward))
 
 (use-package saveplace
   :config
