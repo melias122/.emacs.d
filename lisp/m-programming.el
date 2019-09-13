@@ -20,6 +20,7 @@
 ;; editing
 ;;
 (use-package editorconfig
+  :diminish
   :defer 1
   :config (editorconfig-mode 1))
 
@@ -88,6 +89,7 @@
   (global-company-mode 1))
 
 (use-package eldoc
+  :diminish
   :hook (prog-mode . eldoc-mode))
 
 ;;
@@ -153,6 +155,8 @@
 (use-package exec-path-from-shell
   :defer 1
   :if (memq window-system '(mac x ns))
+  :custom
+  (exec-path-from-shell-check-startup-files nil)
   :config
   (exec-path-from-shell-initialize))
 
