@@ -146,8 +146,6 @@
 (use-package ivy-xref
   :custom (xref-show-xrefs-function 'ivy-xref-show-xrefs))
 
-(use-package ag)
-
 (use-package smart-jump
   :defer 1
   :custom
