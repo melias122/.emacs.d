@@ -18,7 +18,11 @@
 
   ;; maximize emacs on start
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  (tool-bar-mode -1)
+
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  ;; (push '(menu-bar-lines . 0) default-frame-alist)
+  (unless (display-graphic-p)
+    (tool-bar-mode -1))
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1))
 
