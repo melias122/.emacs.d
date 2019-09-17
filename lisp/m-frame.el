@@ -51,14 +51,15 @@
   (which-key-mode 1))
 
 (use-package tramp
-  :config
-  (put 'temporary-file-directory 'standard-value '("/tmp"))
+  :defer t
   :custom
   (tramp-backup-directory-alist backup-directory-alist)
   (tramp-default-method "ssh")
   (tramp-default-proxies-alist nil)
   (tramp-histfile-override "/tmp/.tramp_history")
-  (tramp-chunksize 2000))
+  (tramp-chunksize 2000)
+  :config
+  (put 'temporary-file-directory 'standard-value '("/tmp")))
 
 (use-package delsel
   :bind (:map mode-specific-map
