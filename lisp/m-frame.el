@@ -64,9 +64,4 @@
   :bind (:map mode-specific-map
           ("C-g" . minibuffer-keyboard-quit)))
 
-;; this should be fixed in 26.3+
-(use-package gnutls
-  :custom
-  (gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
 (provide 'm-frame)
