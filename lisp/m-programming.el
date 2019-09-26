@@ -36,9 +36,7 @@
   :config (global-highlight-parentheses-mode 1))
 
 (use-package idle-highlight-mode
-  :defer 1
-  :diminish idle-highlight-mode
-  :config (idle-highlight-mode 1))
+  :hook (prog-mode . idle-highlight-mode))
 
 (use-package electric
   :hook (prog-mode . electric-pair-mode))
