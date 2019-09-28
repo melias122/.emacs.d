@@ -134,6 +134,12 @@
 (use-package ccls
   :custom (ccls-sem-highlight-method 'overlay))
 
+(use-package cc-mode
+  :custom
+  (c-default-style "linux")
+  (c-basic-offset 4)
+  (backward-delete-char-untabify-method nil))
+
 ;;
 ;; jump
 ;;
