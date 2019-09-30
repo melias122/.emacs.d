@@ -147,7 +147,9 @@
 ;; jump
 ;;
 (use-package ivy-xref
-  :custom (xref-show-xrefs-function 'ivy-xref-show-xrefs))
+  :init (if (< emacs-major-version 27)
+            (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+          (setq xref-show-definitions-function #'ivy-xref-show-defs)))
 
 (use-package smart-jump
   :defer 1
