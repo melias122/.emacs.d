@@ -4,7 +4,7 @@
 (use-package thrift :diminish)
 (use-package cmake-font-lock :hook (cmake-mode . cmake-font-lock-activate))
 (use-package cmake-mode :mode ("CMakeLists_src.txt"))
-(use-package protobuf-mode)
+(use-package protobuf-mode :defer t)
 (use-package yaml-mode)
 
 (use-package markdown-mode
