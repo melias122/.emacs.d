@@ -140,6 +140,9 @@
   (c-basic-offset 4)
   (backward-delete-char-untabify-method nil))
 
+(use-package modern-cpp-font-lock
+  :hook (c++-mode . modern-c++-font-lock-mode))
+
 ;;
 ;; jump
 ;;
