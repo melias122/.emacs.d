@@ -155,7 +155,7 @@
   :defer 1
   :custom
   (dumb-jump-selector 'ivy)
-  (dumb-jump-prefer-searcher nil)
+  (smart-jump-find-references-fallback-function 'm/smart-jump-find-references-with-counsel-rg)
   :config
   (smart-jump-setup-default-registers))
 
