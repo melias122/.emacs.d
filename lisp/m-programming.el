@@ -57,13 +57,13 @@
 ;;
 ;; git
 ;;
-(use-package git-gutter-fringe
-  :defer 1
-  :diminish git-gutter-mode
-  :config (global-git-gutter-mode 1))
-
 (use-package magit
   :bind ("C-x g" . magit-status))
+
+(use-package diff-hl
+  :defer 1
+  :hook (magit-post-refresh . diff-hl-magit-post-refresh)
+  :config (global-diff-hl-mode))
 
 ;;
 ;; completion & snippets
