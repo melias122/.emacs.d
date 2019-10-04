@@ -5,9 +5,11 @@
       gc-cons-percentage 0.6)
 (add-hook 'after-init-hook
           `(lambda ()
-             (setq gc-cons-threshold 800000
-                   gc-cons-percentage 0.1)
+             (setq gc-cons-threshold 100000000
+                   gc-cons-percentage 0.2)
              (garbage-collect)) t)
+
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 ;; m's custom emacs configuration.
 ;;

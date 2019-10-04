@@ -92,13 +92,6 @@
   :hook (prog-mode . eldoc-mode))
 
 ;;
-;; go-mode
-;;
-(use-package go-mode
-  :hook (before-save . gofmt-before-save)
-  :custom (gofmt-command "goimports"))
-
-;;
 ;; Language Server Protocol (LSP)
 ;;
 
@@ -107,22 +100,29 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook ((c-mode c++-mode objc-mode go-mode) . lsp-deferred)
   :custom
-  (lsp-auto-guess-root t)
   (lsp-eldoc-render-all nil)
-  (lsp-inhibit-message t)
-  (lsp-message-project-root-warning t)
-  (lsp-prefer-flymake :none)
   (lsp-enable-snippet nil)
   (lsp-file-watch-threshold 128000)
-  :config
-  (use-package company-lsp
-    :commands company-lsp
-    :custom
-    (company-transformers nil)
-    (company-lsp-async t)
-    (company-lsp-cache-candidates nil)))
+  (lsp-diagnostic-package :none))
+
+(use-package company-lsp
+  :commands company-lsp
+  :custom
+  (company-transformers nil)
+  (company-lsp-async t)
+  (company-lsp-cache-candidates nil))
+
+;;
+;; go-mode
+;;
+(defun m/go-mode-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(use-package go-mode
+  :hook ( (go-mode . lsp-deferred)
+          (go-mode . m/go-mode-hooks)))
 
 (use-package eglot
   :disabled
@@ -133,6 +133,7 @@
 ;; c/c++-mode
 ;;
 (use-package ccls
+  :hook ((c-mode c++-mode) . lsp-deferred)
   :custom (ccls-sem-highlight-method 'overlay))
 
 (use-package cc-mode
