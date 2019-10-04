@@ -74,17 +74,18 @@
   :config (yas-global-mode t))
 
 (use-package company
-  :defer 0.5
   :diminish
   :bind (("C-M-i" . company-indent-or-complete-common)
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
           ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
   :custom
-  (company-idle-delay 1) ; popup delay
-  (company-echo-delay 0) ; removes blinking
+  (company-idle-delay nil) ; removes popup
+  (company-echo-delay 0)   ; removes blinking
   :config
-  (global-company-mode 1))
+  (global-company-mode 1)
+  (setq company-backends (delete 'company-clang company-backends))
+  (setq company-backends (delete 'company-xcode company-backends)))
 
 (use-package eldoc
   :diminish
