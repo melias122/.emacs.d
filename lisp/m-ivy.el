@@ -31,7 +31,8 @@
   (projectile-completion-system 'ivy)
   ;; (projectile-project-root-files-bottom-up)
   (counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc)
-  (counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+  (counsel-rg-base-command   "rg -S -M 120 --no-heading --line-number --color never %s .")
+  (counsel-grep-base-command "rg -S -M 120 --no-heading --line-number --color never '%s' %s")
   :config
   (counsel-projectile-mode 1))
 
