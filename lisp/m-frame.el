@@ -74,4 +74,7 @@
   :custom
   (gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
+;; for dired
+(setq dired-dwim-target t)
+
 (provide 'm-frame)
