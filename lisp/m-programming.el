@@ -116,11 +116,11 @@
 ;;
 ;; go-mode
 ;;
-(defun m/go-mode-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-
 (use-package go-mode
+  :init
+  (defun m/go-mode-hooks ()
+    (add-hook 'before-save-hook 'lsp-format-buffer t t)
+    (add-hook 'before-save-hook 'lsp-organize-imports t t))
   :hook ( (go-mode . lsp-deferred)
           (go-mode . m/go-mode-hooks)))
 
