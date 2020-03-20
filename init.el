@@ -45,15 +45,3 @@
   (require 'm-functions)
   (require 'm-ivy)
   (require 'm-programming))
-
-;; package to try (suggested by Fionn)
-;;
-;; expand-region
-;; iedit
-;; visual-regexp
-;; avy
-;; hydra
-;; find-file-in-project (only really need "find-file-in-current-directory", very useful outside repos)
-;; ws-butler
-;; wgrep
-;; all
