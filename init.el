@@ -1,18 +1,10 @@
-;; Bootstrap
-
-;; Speed up startup
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
-(add-hook 'after-init-hook
-          `(lambda ()
-             (setq gc-cons-threshold 100000000
-                   gc-cons-percentage 0.2)
-             (garbage-collect)) t)
-
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
-
 ;; m's custom emacs configuration.
 ;;
+
+;; A big contributor to startup times is garbage collection. We up the gc
+;; threshold to temporarily prevent it from running, then reset it later by
+;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;; Initialize package
 (require 'package)
@@ -45,3 +37,9 @@
   (require 'm-functions)
   (require 'm-ivy)
   (require 'm-programming))
+
+;; Package for garbage collection modifications
+(use-package gcmh
+  :diminish
+  :config
+  (gcmh-mode 1))
