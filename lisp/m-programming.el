@@ -1,10 +1,25 @@
 ;;
 ;; syntax
 ;;
-(use-package thrift :diminish)
-(use-package cmake-font-lock :hook (cmake-mode . cmake-font-lock-activate))
-(use-package cmake-mode :mode ("CMakeLists_src.txt"))
-(use-package protobuf-mode :defer t)
+
+;; thrift syntax highlighting
+(use-package thrift
+  :mode ("\\.thrift\\'" . thrift-mode ))
+
+;; cmake syntax highlighting
+(use-package cmake-mode
+  :mode (("\\.cmake\\'" . cmake-mode)
+         ("CMakeLists\\.txt\\'" . cmake-mode)
+         ("CMakeLists_src\\.txt\\'" . cmake-mode)))
+
+(use-package cmake-font-lock
+  :hook (cmake-mode . cmake-font-lock-activate))
+
+;; proto syntax highlighting
+(use-package protobuf-mode
+  :mode "\\.proto\\'")
+
+;; yaml syntax highlighting
 (use-package yaml-mode)
 
 (use-package markdown-mode
@@ -142,6 +157,7 @@
   (c-basic-offset 4)
   (backward-delete-char-untabify-method nil))
 
+;; c++11 and beyond syntax highlighting
 (use-package modern-cpp-font-lock
   :hook (c++-mode . modern-c++-font-lock-mode))
 
