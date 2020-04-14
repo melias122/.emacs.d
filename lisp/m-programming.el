@@ -31,6 +31,9 @@
   :config
   (use-package flymd))
 
+;; json syntax highlighting
+(use-package json-mode)
+
 ;;
 ;; editing
 ;;
