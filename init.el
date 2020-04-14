@@ -43,3 +43,9 @@
   :diminish
   :config
   (gcmh-mode 1))
+
+(use-package esup
+  :ensure t
+  ;; To use MELPA Stable use ":pin mepla-stable",
+  :pin melpa
+  :commands (esup))
