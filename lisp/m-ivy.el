@@ -1,6 +1,7 @@
 (use-package ivy
   :diminish
-  :bind ("C-x b" . ivy-switch-buffer)
+  :bind (("C-x b" . ivy-switch-buffer)
+         ("C-<return>" . ivy-immediate-done))
   :custom
   (ivy-use-virtual-buffers t)
   (enable-recursive-minibuffers t)
