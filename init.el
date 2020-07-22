@@ -29,6 +29,7 @@
 ;; Required by use-package
 (use-package diminish)
 (use-package bind-key)
+(use-package delight)
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")

@@ -34,7 +34,7 @@
 ;; editing
 ;;
 (use-package editorconfig
-  :diminish
+  :delight " EC"
   :defer 1
   :config (editorconfig-mode 1))
 
@@ -88,7 +88,6 @@
   :config (yas-global-mode t))
 
 (use-package company
-  :diminish
   :bind (("C-M-i" . company-indent-or-complete-common)
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
