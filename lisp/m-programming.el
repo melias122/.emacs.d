@@ -2,10 +2,6 @@
 ;; syntax
 ;;
 
-;; thrift syntax highlighting
-(use-package thrift
-  :mode ("\\.thrift\\'" . thrift-mode ))
-
 ;; cmake syntax highlighting
 (use-package cmake-mode
   :mode (("\\.cmake\\'" . cmake-mode)

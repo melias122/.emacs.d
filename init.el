@@ -36,7 +36,8 @@
   (require 'm-frame)
   (require 'm-functions)
   (require 'm-ivy)
-  (require 'm-programming))
+  (require 'm-programming)
+  (require 'thrift))
 
 ;; Package for garbage collection modifications
 (use-package gcmh
