@@ -147,7 +147,10 @@ This is intended to be used with `font-lock-keywords'."
          "void"
          ;; Treat optional/required as type keywords, as they occur in that context.
          "optional"
-         "required")
+         "required"
+
+         ;; StreamSDK additions
+         "cmpath")
        'symbols)
      . font-lock-type-face)
     ;; Reserved words in thirftl.ll that don't currently do anything.
