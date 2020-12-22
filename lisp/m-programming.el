@@ -146,6 +146,7 @@
 ;; c/c++-mode
 ;;
 (use-package ccls
+  :disabled
   :hook ((c-mode c++-mode) . lsp-deferred)
   :custom (ccls-sem-highlight-method 'overlay))
 
