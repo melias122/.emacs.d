@@ -88,7 +88,7 @@
   :config (yas-global-mode t))
 
 (use-package company
-  :bind (("C-M-i" . company-indent-or-complete-common)
+  :bind (("C-M-i" . counsel-company)
           :map company-active-map
           ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
           ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
