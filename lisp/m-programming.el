@@ -119,8 +119,10 @@
   (lsp-eldoc-render-all nil)
   (lsp-enable-snippet nil)
   (lsp-file-watch-threshold 128000)
-  (lsp-diagnostic-package :none)
-  (lsp-headerline-breadcrumb-enable nil))
+  (lsp-diagnostic-package :auto)
+  (lsp-headerline-breadcrumb-enable nil)
+  :config
+  (lsp-register-custom-settings '(("gopls.staticcheck" t t))))
 
 (use-package company-lsp
   :commands company-lsp
