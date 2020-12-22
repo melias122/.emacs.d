@@ -117,7 +117,8 @@
   (lsp-eldoc-render-all nil)
   (lsp-enable-snippet nil)
   (lsp-file-watch-threshold 128000)
-  (lsp-diagnostic-package :none))
+  (lsp-diagnostic-package :none)
+  (lsp-headerline-breadcrumb-enable nil))
 
 (use-package company-lsp
   :commands company-lsp
