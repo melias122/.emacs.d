@@ -2,6 +2,8 @@
 ;; syntax
 ;;
 
+(use-package vue-mode)
+
 ;; cmake syntax highlighting
 (use-package cmake-mode
   :mode (("\\.cmake\\'" . cmake-mode)
