@@ -179,14 +179,6 @@
   ;; as well
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
-(use-package smart-jump
-  :defer 1
-  :custom
-  (dumb-jump-selector 'ivy)
-  (smart-jump-find-references-fallback-function 'm/smart-jump-find-references-with-counsel-rg)
-  :config
-  (smart-jump-setup-default-registers))
-
 (use-package exec-path-from-shell
   :defer 1
   :if (memq window-system '(mac x ns))
