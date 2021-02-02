@@ -125,13 +125,6 @@
   :config
   (lsp-register-custom-settings '(("gopls.staticcheck" t t))))
 
-(use-package company-lsp
-  :commands company-lsp
-  :custom
-  (company-transformers nil)
-  (company-lsp-async t)
-  (company-lsp-cache-candidates nil))
-
 ;;
 ;; go-mode
 ;;
