@@ -179,6 +179,12 @@
   ;; as well
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
+(use-package dumb-jump
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  :custom
+  (dumb-jump-selector 'ivy))
+
 (use-package exec-path-from-shell
   :defer 1
   :if (memq window-system '(mac x ns))
