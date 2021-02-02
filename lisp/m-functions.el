@@ -1,15 +1,3 @@
-(defun compile-streamsdk ()
-  "Compile StreamSDK."
-  (interactive)
-  (require 'magit)
-  (let ((project-dir (magit-toplevel)))
-    (if (null project-dir)
-        (message "Not in a project directory!")
-      (let ((build (completing-read "build type: " (directory-files (magit-toplevel) t "\.build-.*$") nil t)))
-        (switch-to-buffer "*compilation*")
-        (cd build)
-        (compile "make -j 7")))))
-
 (defun json-to-single-line (beg end)
   "Collapse prettified json in region between BEG and END to a single line"
   (interactive "r")
