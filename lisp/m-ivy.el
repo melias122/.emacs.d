@@ -30,7 +30,6 @@
          ("C-k" . counsel-projectile))
   :custom
   (projectile-completion-system 'ivy)
-  ;; (projectile-project-root-files-bottom-up)
   (counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc)
   :config
   (push "vendor" projectile-globally-ignored-directories)
