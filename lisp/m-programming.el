@@ -121,6 +121,7 @@
   (lsp-file-watch-threshold 128000)
   (lsp-diagnostic-package :auto)
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-enable-xref t)
   :config
   (lsp-register-custom-settings '(("gopls.staticcheck" t t))))
 
@@ -177,7 +178,10 @@
   ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
   ;; commands other than xref-find-definitions (e.g. project-find-regexp)
   ;; as well
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+  :custom
+  (xref-prompt-for-identifier nil)
+  (xref-search-program 'ripgrep))
 
 (use-package dumb-jump
   :init
