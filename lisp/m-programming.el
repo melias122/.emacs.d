@@ -109,10 +109,6 @@
 ;;
 ;; Language Server Protocol (LSP)
 ;;
-
-;; On fresh install emacs is complaining that lsp/ccls needs spinner
-(use-package spinner)
-
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
