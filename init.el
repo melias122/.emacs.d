@@ -6,6 +6,9 @@
 ;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; lsp recommends
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
 ;; Initialize package
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -51,3 +54,6 @@
   ;; To use MELPA Stable use ":pin mepla-stable",
   :pin melpa
   :commands (esup))
+
+;; Reset gc to 4mb
+(setq gc-cons-threshold (* 4 1024 1024)) ; 4mb
