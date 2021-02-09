@@ -1,3 +1,0 @@
-[submodule "editorconfig"]
-	path = lisp/editorconfig
-	url = https://github.com/editorconfig/editorconfig-emacs.git

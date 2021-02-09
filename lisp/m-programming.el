@@ -37,7 +37,6 @@
 ;; editing
 ;;
 (use-package editorconfig
-  :ensure nil
   :delight " EC"
   :defer 1
   :config (editorconfig-mode 1))
