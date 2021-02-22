@@ -26,7 +26,7 @@
   :mode ( ("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode))
-  :custom (markdown-command "multimarkdown")
+  :custom (markdown-command "markdown")
   :config
   (use-package flymd))
 
@@ -40,6 +40,8 @@
   :ensure nil
   :delight " EC"
   :defer 1
+  :init
+  (setq editorconfig--enable-20210221-testing t)
   :config (editorconfig-mode 1))
 
 (use-package simple
@@ -138,6 +140,16 @@
   :hook ((c-mode c++-mode go-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-stay-out-of 'imenu))
+
+;;
+; Bridge projectile and project together so packages that depend on project
+;; like eglot work
+;; (defun m/projectile-project-find-function (dir)
+;;   (let ((root (projectile-project-root dir)))
+;;     (and root (cons 'transient root))))
+;; (projectile-mode t)
+;; (with-eval-after-load 'project
+;;   (add-to-list 'project-find-functions 'm/projectile-project-find-function))
 
 ;;
 ;; c/c++-mode

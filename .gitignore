@@ -12,3 +12,4 @@ tramp
 .lsp-session*
 semanticdb
 transient
+eln-cache
