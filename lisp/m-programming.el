@@ -3,6 +3,7 @@
 ;;
 
 (use-package vue-mode)
+(use-package csharp-mode)
 
 ;; cmake syntax highlighting
 (use-package cmake-mode
