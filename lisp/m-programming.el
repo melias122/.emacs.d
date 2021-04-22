@@ -86,9 +86,10 @@
 ;; completion & snippets
 ;;
 (use-package yasnippet
-  :disabled
   :diminish yas-minor-mode
   :config (yas-global-mode t))
+
+(use-package yasnippet-snippets)
 
 (use-package company
   :bind (("C-M-i" . counsel-company)
