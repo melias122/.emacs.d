@@ -30,4 +30,11 @@
             (symbol-name (symbol-at-point))))))
     (message "Install swiper to use `+smart-jump-simple-find-references-with-counsel-rg'.")))
 
+(defun m/indent-or-insert-tab (arg)
+  "Insert TAB if point is in a string, otherwise call `indent-for-tab-command'."
+  (interactive "P")
+  (if (nth 3 (syntax-ppss (point)))
+    (insert "\t")
+    (indent-for-tab-command arg)))
+
 (provide 'm-functions)

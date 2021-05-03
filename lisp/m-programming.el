@@ -133,7 +133,8 @@
     (add-hook 'before-save-hook 'lsp-format-buffer t t)
     (add-hook 'before-save-hook 'lsp-organize-imports t t))
   :hook ( (go-mode . lsp-deferred)
-          (go-mode . m/go-mode-hooks)))
+          (go-mode . m/go-mode-hooks)
+          (go-mode . (lambda () (local-set-key (kbd "TAB") m/indent-or-insert-tab)))))
 
 (use-package eglot
   :disabled
