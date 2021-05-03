@@ -67,7 +67,7 @@
 
 ;; This font can be installed from `https://github.com/IBM/plex'
 (add-to-list 'default-frame-alist
-  '(font . "IBM Plex Mono 13"))
+  '(font . "IBM Plex Mono 11"))
 
 ;; Install fonts with `fira-code-mode-install-fonts'
 (use-package fira-code-mode
