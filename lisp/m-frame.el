@@ -71,6 +71,9 @@
 
 ;; Install fonts with `fira-code-mode-install-fonts'
 (use-package fira-code-mode
+  :custom
+  ;; List of ligatures to turn off
+  (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" ".." "..."))
   :hook (prog-mode . fira-code-mode))
 
 (provide 'm-frame)
