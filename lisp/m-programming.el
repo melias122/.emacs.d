@@ -113,6 +113,7 @@
 ;; Language Server Protocol (LSP)
 ;;
 (use-package lsp-mode
+  :disabled
   :commands (lsp lsp-deferred)
   :custom
   (lsp-eldoc-render-all nil)
@@ -128,18 +129,15 @@
 ;; go-mode
 ;;
 (use-package go-mode
-  :init
-  (defun m/go-mode-hooks ()
-    (add-hook 'before-save-hook 'lsp-format-buffer t t)
-    (add-hook 'before-save-hook 'lsp-organize-imports t t))
-  :hook ( (go-mode . lsp-deferred)
-          (go-mode . m/go-mode-hooks)
-          (go-mode . (lambda () (local-set-key (kbd "TAB") m/indent-or-insert-tab)))))
+  :bind ("TAB" . m/indent-or-insert-tab)
+  :hook ((before-save . (lambda () (call-interactively 'eglot-code-action-organize-imports)))
+         (before-save . eglot-format-buffer)))
 
 (use-package eglot
-  :disabled
-  :hook ((c-mode c++-mode go-mode) . (lambda () (eglot-ensure)))
-  :custom (company-transformers nil))
+  :commands (eglot eglot-ensure)
+  :hook ((c-mode c++-mode go-mode) . eglot-ensure)
+  :config
+  (add-to-list 'eglot-stay-out-of 'imenu))
 
 ;;
 ;; c/c++-mode
