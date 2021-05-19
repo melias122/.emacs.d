@@ -124,22 +124,17 @@
   :config
   (lsp-register-custom-settings '(("gopls.staticcheck" t t))))
 
+(use-package eglot
+  :commands (eglot eglot-ensure)
+  :hook (((c-mode c++-mode go-mode) . eglot-ensure)))
+
 ;;
 ;; go-mode
 ;;
 (use-package go-mode
-  :init
-  (defun m/go-mode-hooks ()
-    (add-hook 'before-save-hook 'lsp-format-buffer t t)
-    (add-hook 'before-save-hook 'lsp-organize-imports t t))
-  :hook ( (go-mode . lsp-deferred)
-          (go-mode . m/go-mode-hooks)
-          (go-mode . (lambda () (local-set-key (kbd "TAB") m/indent-or-insert-tab)))))
-
-(use-package eglot
-  :disabled
-  :hook ((c-mode c++-mode go-mode) . (lambda () (eglot-ensure)))
-  :custom (company-transformers nil))
+  :bind ("TAB" . m/indent-or-insert-tab)
+  :hook ((before-save . (lambda () (call-interactively 'eglot-code-action-organize-imports)))
+          (before-save . eglot-format-buffer)))
 
 ;;
 ;; c/c++-mode
