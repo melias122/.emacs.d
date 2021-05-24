@@ -4,10 +4,17 @@
 ;; A big contributor to startup times is garbage collection. We up the gc
 ;; threshold to temporarily prevent it from running, then reset it later by
 ;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
-(setq gc-cons-threshold most-positive-fixnum)
+(setq
+  gc-cons-threshold most-positive-fixnum
+  gc-cons-percentage 0.6)
 
-;; lsp recommends
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (setq
+     gc-cons-threshold (* 1024 1024) ;; 1mb
+     gc-cons-percentage (car (get 'gc-cons-threshold 'standard-value)))))
+
 
 ;; Initialize package
 (require 'package)
@@ -46,14 +53,9 @@
 ;; Package for garbage collection modifications
 (use-package gcmh
   :diminish
-  :config
-  (gcmh-mode 1))
+  :hook (after-init . gcmh-mode))
 
+;; For startup time profiling
 (use-package esup
-  :ensure t
-  ;; To use MELPA Stable use ":pin mepla-stable",
   :pin melpa
   :commands (esup))
-
-;; Reset gc to 4mb
-(setq gc-cons-threshold (* 4 1024 1024)) ; 4mb

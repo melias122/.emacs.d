@@ -2,8 +2,10 @@
 ;; syntax
 ;;
 
-(use-package vue-mode)
-(use-package csharp-mode)
+(use-package vue-mode
+  :mode "\\.vue\\'")
+(use-package csharp-mode
+  :mode "\\.cs\\'")
 
 ;; cmake syntax highlighting
 (use-package cmake-mode
@@ -31,26 +33,26 @@
   (use-package flymd))
 
 ;; json syntax highlighting
-(use-package json-mode)
+(use-package json-mode
+  :mode "\\.json\\'")
 
 ;;
 ;; editing
 ;;
 (use-package editorconfig
   :delight " EC"
-  :defer 1
-  :config (editorconfig-mode 1))
+  :hook (after-init . editorconfig-mode))
 
 (use-package simple
   :ensure nil
   :hook (before-save . delete-trailing-whitespace)
+  :custom (backward-delete-char-untabify-method nil)
   :config
   (line-number-mode 1))
 
 (use-package highlight-parentheses
-  :defer 1
   :diminish
-  :config (global-highlight-parentheses-mode 1))
+  :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package idle-highlight-mode
   :hook (prog-mode . idle-highlight-mode))
@@ -62,8 +64,7 @@
   :hook (prog-mode . show-paren-mode))
 
 (use-package hl-line
-  :defer 1
-  :config (global-hl-line-mode 1))
+  :hook (after-init . global-hl-line-mode))
 
 ;;
 ;; compile
@@ -78,9 +79,9 @@
   :bind ("C-x g" . magit-status))
 
 (use-package diff-hl
-  :defer 1
-  :hook (magit-post-refresh . diff-hl-magit-post-refresh)
-  :config (global-diff-hl-mode))
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         (after-init . global-diff-hl-mode)))
 
 ;;
 ;; completion & snippets
@@ -90,7 +91,7 @@
   :init
   (use-package yasnippet-snippets)
   :diminish yas-minor-mode
-  :config (yas-global-mode t))
+  :hook (prog-mode . yas-minor-mode-on))
 
 (use-package company
   :bind (("C-M-i" . counsel-company)
@@ -147,11 +148,7 @@
   (dumb-jump-selector ((lambda () (if (featurep 'ivy) 'ivy 'completing-read)))))
 
 (use-package exec-path-from-shell
-  :defer 1
   :if (memq window-system '(mac x ns))
-  :custom
-  (exec-path-from-shell-check-startup-files nil)
-  :config
-  (exec-path-from-shell-initialize))
+  :hook (after-init . exec-path-from-shell-initialize))
 
 (provide 'm-programming)

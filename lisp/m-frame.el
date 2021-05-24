@@ -54,9 +54,7 @@
 
 (use-package which-key
   :diminish
-  :defer 1
-  :config
-  (which-key-mode 1))
+  :hook (after-init . which-key-mode))
 
 (use-package delsel
   :bind (:map mode-specific-map
