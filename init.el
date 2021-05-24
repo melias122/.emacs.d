@@ -40,6 +40,7 @@
   (require 'm-frame)
   (require 'm-functions)
   (require 'm-ivy)
+  ;; (require 'm-completion-selectrum)
   (require 'm-programming))
 
 ;; Package for garbage collection modifications

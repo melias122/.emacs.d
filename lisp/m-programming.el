@@ -142,9 +142,9 @@
 ;;
 (use-package dumb-jump
   :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate t)
   :custom
-  (dumb-jump-selector 'ivy))
+  (dumb-jump-selector ((lambda () (if (featurep 'ivy) 'ivy 'completing-read)))))
 
 (use-package exec-path-from-shell
   :defer 1
