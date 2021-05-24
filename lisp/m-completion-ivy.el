@@ -49,4 +49,4 @@
   (xref-prompt-for-identifier nil)
   (xref-search-program 'ripgrep))
 
-(provide 'm-ivy)
+(provide 'm-completion-ivy)

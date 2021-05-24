@@ -39,7 +39,7 @@
   (require 'm-backups)
   (require 'm-frame)
   (require 'm-functions)
-  (require 'm-ivy)
+  (require 'm-completion-ivy)
   ;; (require 'm-completion-selectrum)
   (require 'm-programming))
 
