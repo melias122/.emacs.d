@@ -74,12 +74,4 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package projectile
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :bind ("C-k" . projectile-find-file)
-  :custom (projectile-switch-project-action 'projectile-vc)
-  :config
-  (push "vendor" projectile-globally-ignored-directories)
-  (projectile-mode 1))
-
 (provide 'm-completion-selectrum)

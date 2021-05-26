@@ -25,14 +25,12 @@
   (counsel-mode 1))
 
 (use-package counsel-projectile
-  :bind-keymap ("C-c p" . projectile-command-map)
   :bind (("C-r" . counsel-projectile-rg)
          ("C-k" . counsel-projectile))
   :custom
   (projectile-completion-system 'ivy)
   (counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc)
   :config
-  (push "vendor" projectile-globally-ignored-directories)
   (counsel-projectile-mode 1))
 
 (use-package ivy-xref
