@@ -16,33 +16,10 @@
      gc-cons-percentage (car (get 'gc-cons-threshold 'standard-value)))))
 
 
-;; Initialize package
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(package-initialize)
-
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-;; Set before loading use-package
-(eval-and-compile
-  (setq use-package-always-ensure t))
-
-(eval-when-compile
-	(require 'use-package))
-
-;; Required by use-package
-(use-package diminish)
-(use-package bind-key)
-(use-package delight)
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")
+  (require 'm-package)
   (require 'm-backups)
   (require 'm-frame)
   (require 'm-functions)
