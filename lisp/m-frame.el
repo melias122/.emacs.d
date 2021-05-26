@@ -14,17 +14,7 @@
     (setq mac-option-modifier 'super)
     (setq mac-command-modifier 'meta))
 
-  (defalias 'yes-or-no-p 'y-or-n-p)
-
-  ;; maximize emacs on start
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  ;; (push '(menu-bar-lines . 0) default-frame-alist)
-  (unless (display-graphic-p)
-    (tool-bar-mode -1))
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1))
+  (defalias 'yes-or-no-p 'y-or-n-p))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
@@ -62,10 +52,6 @@
 
 ;; for dired
 (setq dired-dwim-target t)
-
-;; This font can be installed from `https://github.com/IBM/plex'
-(add-to-list 'default-frame-alist
-  '(font . "IBM Plex Mono 11"))
 
 ;; Install fonts with `fira-code-mode-install-fonts'
 (use-package fira-code-mode
