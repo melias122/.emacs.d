@@ -1,6 +1,6 @@
 (use-package frame
   :ensure nil
-  :defer nil
+  :demand t
   :bind ( ("C-z" . undo)
           ("C-x C-z" . nil)
           ("M-g" . goto-line)
@@ -24,8 +24,7 @@
   :custom (uniquify-buffer-name-style 'forward))
 
 (use-package saveplace
-  :config
-  (setq-default save-place t))
+  :hook (after-init . save-place-mode))
 
 ;; TODO: night/day theme
 (use-package doom-themes
@@ -51,7 +50,9 @@
           ("C-g" . minibuffer-keyboard-quit)))
 
 ;; for dired
-(setq dired-dwim-target t)
+(use-package dired
+  :ensure nil
+  :custom (dired-dwim-target t))
 
 ;; Install fonts with `fira-code-mode-install-fonts'
 (use-package fira-code-mode
