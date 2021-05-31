@@ -112,18 +112,6 @@
 ;;
 ;; Language Server Protocol (LSP)
 ;;
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :custom
-  (lsp-eldoc-render-all nil)
-  (lsp-enable-snippet nil)
-  (lsp-file-watch-threshold 128000)
-  (lsp-diagnostic-package :auto)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-enable-xref t)
-  :config
-  (lsp-register-custom-settings '(("gopls.staticcheck" t t))))
-
 (use-package eglot
   :commands (eglot eglot-ensure)
   :hook (((c-mode c++-mode go-mode) . eglot-ensure)))
@@ -139,11 +127,6 @@
 ;;
 ;; c/c++-mode
 ;;
-(use-package ccls
-  :disabled
-  :hook ((c-mode c++-mode) . lsp-deferred)
-  :custom (ccls-sem-highlight-method 'overlay))
-
 (use-package cc-mode
   :custom
   (c-default-style "linux")
