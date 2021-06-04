@@ -36,6 +36,8 @@
 (use-package json-mode
   :mode "\\.json\\'")
 
+(use-package dockerfile-mode)
+
 ;;
 ;; editing
 ;;
