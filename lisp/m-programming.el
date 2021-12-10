@@ -47,10 +47,13 @@
 
 (use-package simple
   :ensure nil
-  :hook (before-save . delete-trailing-whitespace)
   :custom (backward-delete-char-untabify-method nil)
   :config
   (line-number-mode 1))
+
+(use-package ws-butler
+  :diminish
+  :hook (after-init . ws-butler-global-mode))
 
 (use-package highlight-parentheses
   :diminish
