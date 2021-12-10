@@ -119,9 +119,12 @@
 ;;
 (use-package dumb-jump
   :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate t)
+  (remove-hook 'xref-backend-functions #'etags--xref-backend)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   :custom
-  (dumb-jump-selector ((lambda () (if (featurep 'ivy) 'ivy 'completing-read)))))
+  (dumb-jump-default-project "~/code")
+  (dumb-jump-prefer-searcher 'rg)
+  (dumb-jump-selector 'completing-read))
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac x ns))
