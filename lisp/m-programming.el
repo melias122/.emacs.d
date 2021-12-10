@@ -49,7 +49,8 @@
   :ensure nil
   :custom (backward-delete-char-untabify-method nil)
   :config
-  (line-number-mode 1))
+  (line-number-mode t)
+  (column-number-mode t))
 
 (use-package ws-butler
   :diminish
