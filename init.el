@@ -23,7 +23,7 @@
   (require 'm-backups)
   (require 'm-frame)
   (require 'm-functions)
-  (require 'm-project)
+  (require 'm-projects)
   (require 'm-completion-vertico)
   (require 'm-programming))
 

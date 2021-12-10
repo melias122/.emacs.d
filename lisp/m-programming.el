@@ -69,23 +69,6 @@
   :hook (after-init . global-hl-line-mode))
 
 ;;
-;; compile
-;;
-(use-package compile
-  :custom (compilation-scroll-output 'first-error))
-
-;;
-;; git
-;;
-(use-package magit
-  :bind ("C-x g" . magit-status))
-
-(use-package diff-hl
-  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-         (magit-post-refresh . diff-hl-magit-post-refresh)
-         (after-init . global-diff-hl-mode)))
-
-;;
 ;; completion & snippets
 ;;
 (use-package yasnippet
