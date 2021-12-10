@@ -24,8 +24,7 @@
   (require 'm-frame)
   (require 'm-functions)
   (require 'm-project)
-  (require 'm-completion-ivy)
-  ;; (require 'm-completion-selectrum)
+  (require 'm-completion-vertico)
   (require 'm-programming))
 
 ;; Package for garbage collection modifications
