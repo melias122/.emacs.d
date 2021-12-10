@@ -78,19 +78,6 @@
   :diminish yas-minor-mode
   :hook (prog-mode . yas-minor-mode-on))
 
-(use-package company
-  :bind (("C-M-i" . counsel-company)
-          :map company-active-map
-          ("C-p" . (lambda () (interactive) (company-complete-common-or-cycle -1)))
-          ("C-n" . (lambda () (interactive) (company-complete-common-or-cycle 1))))
-  :custom
-  (company-idle-delay nil) ; removes popup
-  (company-echo-delay 0)   ; removes blinking
-  :config
-  (global-company-mode 1)
-  (setq company-backends (delete 'company-clang company-backends))
-  (setq company-backends (delete 'company-xcode company-backends)))
-
 (use-package eldoc
   :diminish
   :hook (prog-mode . eldoc-mode))
