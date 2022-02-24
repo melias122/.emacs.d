@@ -43,7 +43,9 @@
 ;;
 (use-package editorconfig
   :delight " EC"
-  :hook (after-init . editorconfig-mode))
+  :hook (after-init . editorconfig-mode)
+  :custom
+  (editorconfig-trim-whitespaces-mode 'ws-butler-mode))
 
 (use-package simple
   :ensure nil
