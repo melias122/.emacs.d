@@ -97,7 +97,23 @@
 ;;
 (use-package eglot
   :commands (eglot eglot-ensure)
-  :hook (((c-mode c++-mode go-mode) . eglot-ensure)))
+  :hook (((c-mode          ;; clangd
+           c++-mode        ;; clangd
+           go-mode         ;; go install golang.org/x/tools/gopls@latest
+
+           ;; web
+           html-mode       ;; npm i -g vscode-html-languageserver-bin
+           css-mode        ;; npm i -g vscode-css-languageserver-bin
+           svelte-mode     ;; npm i -g svelteserver
+           javascript-mode ;; npm i -g typescript-language-server
+           typescript-mode ;; npm i -g ypescript-language-server
+
+           json-mode       ;; npm i -g vscode-json-languageserver
+           ) . eglot-ensure))
+  :config
+  (add-to-list 'eglot-stay-out-of 'company)
+  (add-to-list 'eglot-stay-out-of 'flymake)
+  (add-to-list 'eglot-server-programs '(svelte-mode . ("svelteserver"  "--stdio"))))
 
 ;;
 ;; go-mode
@@ -105,7 +121,7 @@
 (use-package go-mode
   :bind ("TAB" . m/indent-or-insert-tab)
   :hook ((before-save . (lambda () (call-interactively 'eglot-code-action-organize-imports)))
-          (before-save . eglot-format-buffer)))
+         (before-save . eglot-format-buffer)))
 
 ;;
 ;; c/c++-mode
