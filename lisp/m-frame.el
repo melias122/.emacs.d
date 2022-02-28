@@ -52,6 +52,13 @@
 ;; for dired
 (use-package dired
   :ensure nil
-  :custom (dired-dwim-target t))
+  :custom
+  (dired-dwim-target t)
+
+  ;; Revert/refresh dired when something changes
+  (global-auto-revent-non-file-buffers t))
+
+;; Revert buffers when underlying file changed
+(global-auto-revert-mode 1)
 
 (provide 'm-frame)
