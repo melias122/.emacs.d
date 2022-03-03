@@ -65,4 +65,7 @@
 (use-package beacon
   :hook (after-init . beacon-mode))
 
+(use-package shell-pop
+  :bind ("C-<return>" . shell-pop))
+
 (provide 'm-frame)
