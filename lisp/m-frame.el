@@ -61,4 +61,8 @@
 ;; Revert buffers when underlying file changed
 (global-auto-revert-mode 1)
 
+;; Will flash cursor on big move, like mouse scroll
+(use-package beacon
+  :hook (after-init . beacon-mode))
+
 (provide 'm-frame)
