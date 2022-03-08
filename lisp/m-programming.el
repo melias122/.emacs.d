@@ -152,4 +152,6 @@
   :if (memq window-system '(mac x ns))
   :hook (after-init . exec-path-from-shell-initialize))
 
+(use-package restclient)
+
 (provide 'm-programming)
