@@ -152,6 +152,9 @@
   :hook ((before-save . (lambda () (call-interactively 'eglot-code-action-organize-imports)))
          (before-save . eglot-format-buffer)))
 
+(use-package flymake-golangci
+  :hook (go-mode . flymake-golangci-load))
+
 ;;
 ;; c/c++-mode
 ;;
