@@ -4,10 +4,37 @@
 
 (use-package typescript-mode
   :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode)))
+         ("\\.js\\'" . typescript-mode)
+         ("\\.tsx\\'" . tsx-mode))
+  :config
+  (define-derived-mode tsx-mode typescript-mode "tsx-mode"))
 
-(use-package vue-mode
-  :mode "\\.vue\\'")
+(use-package tree-sitter
+  :hook ((typescript-mode . tree-sitter-hl-mode)
+         (tsx-mode . tree-sitter-hl-mode)))
+
+(use-package tree-sitter-langs
+  :after tree-sitter
+  :config
+  (tree-sitter-require 'tsx)
+  (add-to-list 'tree-sitter-major-mode-language-alist '(tsx-mode . tsx)))
+
+(use-package web-mode
+  :mode (("\\.svelte\\'" . svelte-mode)
+         ("\\.vue\\'" . vue-mode))
+  :config
+  (define-derived-mode svelte-mode web-mode "svelte-mode")
+  (define-derived-mode vue-mode web-mode "vue-mode"))
+
+(use-package prettier
+  :hook ((tsx-mode . prettier-mode)
+         (typescript-mode . prettier-mode)
+         (json-mode . prettier-mode)
+         (css-mode . prettier-mode)
+         (scss-mode . prettier-mode)
+         (svelte-mode . prettier-mode)
+         (vue-mode . prettier-mode)))
+
 (use-package csharp-mode
   :mode "\\.cs\\'")
 
@@ -104,15 +131,17 @@
            ;; web
            html-mode       ;; npm i -g vscode-html-languageserver-bin
            css-mode        ;; npm i -g vscode-css-languageserver-bin
-           svelte-mode     ;; npm i -g svelteserver
-           javascript-mode ;; npm i -g typescript-language-server
-           typescript-mode ;; npm i -g ypescript-language-server
-
+           svelte-mode     ;; npm i -g svelte-language-server
+           typescript-mode ;; npm i -g typescript-language-servre
            json-mode       ;; npm i -g vscode-json-languageserver
            ) . eglot-ensure))
+  :custom
+  (eglot-workspace-configuration
+    '((:gopls .
+        ((staticcheck . t)
+          (usePlaceholders . t)))))
   :config
   (add-to-list 'eglot-stay-out-of 'company)
-  (add-to-list 'eglot-stay-out-of 'flymake)
   (add-to-list 'eglot-server-programs '(svelte-mode . ("svelteserver"  "--stdio"))))
 
 ;;
