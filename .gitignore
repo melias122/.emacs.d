@@ -12,3 +12,11 @@ tramp
 .lsp-session*
 semanticdb
 transient
+backups
+eln-cache
+.cache
+session*
+history
+var
+projects
+places
