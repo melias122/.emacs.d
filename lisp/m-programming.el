@@ -1,6 +1,8 @@
 ;;
 ;; syntax
 ;;
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 (use-package typescript-mode
   :mode (("\\.ts\\'" . typescript-mode)
