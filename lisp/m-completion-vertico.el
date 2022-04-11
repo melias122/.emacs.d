@@ -5,6 +5,18 @@
   :init
   (vertico-mode))
 
+;; Configure directory extension.
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
 ;; Orderless completion style
 (use-package orderless
   :custom
@@ -23,7 +35,7 @@
 (use-package consult
   :bind (("C-s" . consult-line)
          ("C-r" . consult-ripgrep)
-          ("C-x b" . consult-buffer))
+         ("C-x b" . consult-buffer))
   :init
   ;; Optionally tweak the register preview window.
   ;; This adds thin lines, sorting and hides the mode line of the window.
@@ -73,7 +85,8 @@
     consult-ripgrep consult-git-grep consult-grep
     consult-bookmark consult-recent-file consult-xref
     consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-    :preview-key (kbd "M-.")
+    :preview-key (list (kbd "M-/")
+                   :debounce 0.5 'any)
     consult-line
     :keymap m/previous-search))
 
