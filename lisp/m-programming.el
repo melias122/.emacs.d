@@ -76,9 +76,7 @@
 ;;
 (use-package editorconfig
   :delight " EC"
-  :hook (after-init . editorconfig-mode)
-  :custom
-  (editorconfig-trim-whitespaces-mode 'ws-butler-mode))
+  :hook (after-init . editorconfig-mode))
 
 (use-package simple
   :ensure nil
@@ -86,10 +84,6 @@
   :config
   (line-number-mode t)
   (column-number-mode t))
-
-(use-package ws-butler
-  :diminish
-  :hook (after-init . ws-butler-global-mode))
 
 (use-package highlight-parentheses
   :diminish
