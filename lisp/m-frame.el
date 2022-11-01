@@ -3,6 +3,7 @@
   :demand t
   :bind ( ("C-z" . undo)
           ("C-x C-z" . nil)
+          ("C-x C-c" . nil)
           ("M-g" . goto-line)
           ("C-/" . comment-or-uncomment-line-or-region))
   :custom
