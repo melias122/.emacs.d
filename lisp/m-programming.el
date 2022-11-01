@@ -141,7 +141,7 @@
   (eglot-workspace-configuration
     '((:gopls .
         ((staticcheck . t)
-          (usePlaceholders . t)))))
+         (usePlaceholders . t)))))
   :config
   (add-to-list 'eglot-stay-out-of 'company)
   (add-to-list 'eglot-server-programs '(svelte-mode . ("svelteserver"  "--stdio"))))
