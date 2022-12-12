@@ -6,10 +6,11 @@
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (package-initialize)
 
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Bootstrap use-package for older emacs versions
+(if (< emacs-major-version 29)
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package)))
 
 (eval-when-compile
 	(require 'use-package))
