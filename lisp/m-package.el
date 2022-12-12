@@ -11,16 +11,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Set before loading use-package
-(eval-and-compile
-  (setq use-package-always-ensure t))
-
 (eval-when-compile
 	(require 'use-package))
 
 ;; Required by use-package
-(use-package diminish)
-(use-package bind-key)
-(use-package delight)
+(use-package diminish :ensure t)
+(use-package delight  :ensure t)
 
 (provide 'm-package)

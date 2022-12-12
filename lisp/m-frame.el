@@ -1,5 +1,4 @@
 (use-package frame
-  :ensure nil
   :demand t
   :bind ( ("C-z" . undo)
           ("C-x C-z" . nil)
@@ -21,7 +20,6 @@
   :bind ("C-x C-b" . ibuffer))
 
 (use-package uniquify
-  :ensure nil
   :custom (uniquify-buffer-name-style 'forward))
 
 (use-package saveplace
@@ -29,6 +27,7 @@
 
 ;; TODO: night/day theme
 (use-package doom-themes
+  :ensure t
   :custom
   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
@@ -43,6 +42,7 @@
   (doom-themes-org-config))
 
 (use-package which-key
+  :ensure t
   :diminish
   :hook (after-init . which-key-mode))
 
@@ -52,7 +52,6 @@
 
 ;; for dired
 (use-package dired
-  :ensure nil
   :custom
   (dired-dwim-target t)
 
@@ -64,9 +63,11 @@
 
 ;; Will flash cursor on big move, like mouse scroll
 (use-package beacon
+  :ensure t
   :hook (after-init . beacon-mode))
 
 (use-package shell-pop
+  :ensure  t
   :bind ("C-<return>" . shell-pop))
 
 (provide 'm-frame)

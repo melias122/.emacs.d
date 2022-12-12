@@ -2,20 +2,24 @@
 ;; syntax
 ;;
 (use-package nix-mode
+  :ensure t
   :mode "\\.nix\\'")
 
 (use-package typescript-mode
+  :ensure t
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.js\\'" . typescript-mode))
   :config
   (define-derived-mode tsx-mode typescript-mode "tsx-mode"))
 
 (use-package web-mode
+  :ensure t
   :mode (("\\.html\\'" . web-mode)
          ("\\.gohtml\\'" . web-mode)
          ("\\.tpl\\'" . web-mode)))
 
 (use-package prettier
+  :ensure t
   :hook ((json-mode . prettier-mode)
          (css-mode . prettier-mode)))
 
@@ -24,54 +28,63 @@
 
 ;; cmake syntax highlighting
 (use-package cmake-mode
+  :ensure t
   :mode (("\\.cmake\\'" . cmake-mode)
          ("CMakeLists\\.txt\\'" . cmake-mode)
          ("CMakeLists_src\\.txt\\'" . cmake-mode)))
 
 (use-package cmake-font-lock
+  :ensure t
   :hook (cmake-mode . cmake-font-lock-activate))
 
 ;; proto syntax highlighting
 (use-package protobuf-mode
+  :ensure t
   :mode "\\.proto\\'")
 
 ;; yaml syntax highlighting
-(use-package yaml-mode)
+(use-package yaml-mode
+  :ensure t)
 
 (use-package markdown-mode
+  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode ( ("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode))
   :custom (markdown-command "multimarkdown")
   :config
-  (use-package flymd))
+  (use-package flymd :ensure t))
 
 ;; json syntax highlighting
 (use-package json-mode
+  :ensure t
   :mode "\\.json\\'")
 
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :ensure t)
 
 ;;
 ;; editing
 ;;
 (use-package editorconfig
+  :ensure t
   :delight " EC"
   :hook (after-init . editorconfig-mode))
 
 (use-package simple
-  :ensure nil
   :custom (backward-delete-char-untabify-method nil)
   :config
   (line-number-mode t)
   (column-number-mode t))
 
 (use-package highlight-parentheses
+  :ensure t
   :diminish
   :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package idle-highlight-mode
+  :ensure t
   :hook (prog-mode . idle-highlight-mode))
 
 (use-package electric
@@ -81,6 +94,7 @@
   :hook (prog-mode . show-paren-mode))
 
 (use-package hl-line
+  :ensure t
   :hook (after-init . global-hl-line-mode))
 
 ;;
@@ -91,6 +105,7 @@
   :init
   (use-package yasnippet-snippets)
   :diminish yas-minor-mode
+  :ensure t
   :hook (prog-mode . yas-minor-mode-on))
 
 (use-package eldoc
@@ -123,6 +138,7 @@
 ;; go-mode
 ;;
 (use-package go-mode
+  :ensure t
   :bind ("TAB" . m/indent-or-insert-tab)
   :custom
   (gofmt-command "goimports")
@@ -131,6 +147,7 @@
          (before-save . eglot-format-buffer)))
 
 (use-package flymake-golangci
+  :ensure t
   :hook (go-mode . flymake-golangci-load))
 
 ;;
@@ -144,12 +161,14 @@
 
 ;; c++11 and beyond syntax highlighting
 (use-package modern-cpp-font-lock
+  :ensure t
   :hook (c++-mode . modern-c++-font-lock-mode))
 
 ;;
 ;; jump
 ;;
 (use-package dumb-jump
+  :ensure t
   :init
   (remove-hook 'xref-backend-functions #'etags--xref-backend)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -159,9 +178,11 @@
   (dumb-jump-selector 'completing-read))
 
 (use-package exec-path-from-shell
+  :ensure t
   :if (memq window-system '(mac x ns))
   :hook (after-init . exec-path-from-shell-initialize))
 
-(use-package restclient)
+(use-package restclient
+  :ensure t)
 
 (provide 'm-programming)

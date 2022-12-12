@@ -29,10 +29,12 @@
 
 ;; Package for garbage collection modifications
 (use-package gcmh
+  :ensure t
   :diminish
   :hook (after-init . gcmh-mode))
 
 ;; For startup time profiling
 (use-package esup
+  :ensure t
   :pin melpa
   :commands (esup))

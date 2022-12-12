@@ -1,4 +1,5 @@
 (use-package vertico
+  :ensure t
   :custom
   (vertico-count 8)
   (vertico-cycle t)
@@ -8,7 +9,6 @@
 ;; Configure directory extension.
 (use-package vertico-directory
   :after vertico
-  :ensure nil
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -19,6 +19,7 @@
 
 ;; Orderless completion style
 (use-package orderless
+  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
@@ -33,6 +34,7 @@
   :hook (after-init . savehist-mode))
 
 (use-package consult
+  :ensure t
   :bind (("C-s" . consult-line)
          ("C-r" . consult-ripgrep)
          ("C-x b" . consult-buffer))
@@ -95,12 +97,12 @@
   (recentf-mode))
 
 (use-package marginalia
+  :ensure t
   :config
   (marginalia-mode))
 
 ;; A few more useful configurations...
 (use-package emacs
-  :ensure nil
   :init
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   :custom
