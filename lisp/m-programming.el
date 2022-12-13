@@ -98,12 +98,21 @@
 ;; completion & snippets
 ;;
 (use-package yasnippet
-  :disabled
-  :init
-  (use-package yasnippet-snippets)
-  :diminish yas-minor-mode
   :ensure t
+  :diminish yas-minor-mode
   :hook (prog-mode . yas-minor-mode-on))
+
+(use-package yasnippet-snippets
+  :ensure t)
+
+(use-package consult-yasnippet
+  :ensure t
+  :init
+  (defun m/setup-consult-yas-capf ()
+    (setq-local completion-at-point-functions
+      (cons #'consult-yasnippet
+        completion-at-point-functions)))
+  (add-hook 'prog-mode-hook 'm/setup-consult-yas-capf))
 
 (use-package eldoc
   :diminish
