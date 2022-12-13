@@ -139,6 +139,8 @@
 ;;
 (use-package go-mode
   :ensure t
+  :mode (("\\go.mod\\'"  . go-dot-mod-mode)
+         ("\\go.work\\'" . go-dot-work-mode))
   :bind ("TAB" . m/indent-or-insert-tab)
   :custom
   (gofmt-command "goimports")
