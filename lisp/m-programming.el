@@ -23,9 +23,6 @@
   :hook ((json-mode . prettier-mode)
          (css-mode . prettier-mode)))
 
-(use-package csharp-mode
-  :mode "\\.cs\\'")
-
 ;; cmake syntax highlighting
 (use-package cmake-mode
   :ensure t
