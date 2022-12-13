@@ -45,7 +45,11 @@
 
   ;; Optionally replace `completing-read-multiple' with an enhanced version.
   (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-  (add-hook 'completion-list-mode #'consult-preview-at-point-mode)
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
   :custom
   (register-preview-delay 0)
   (register-preview-function 'consult-register-format)
