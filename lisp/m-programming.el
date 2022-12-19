@@ -1,6 +1,13 @@
 ;;
 ;; syntax
 ;;
+
+(use-package graphql-mode
+  :ensure t
+  :mode "\\.graphqls\\'"
+  :config
+  (setq-local indent-line-function nil))
+
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
