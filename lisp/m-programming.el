@@ -128,24 +128,26 @@
 ;;
 ;; Language Server Protocol (LSP)
 ;;
-(use-package eglot
-  :commands (eglot eglot-ensure)
-  :hook (((c-mode          ;; clangd
-           c++-mode        ;; clangd
-           go-mode         ;; go install golang.org/x/tools/gopls@latest
-
-           ;; web
-           html-mode       ;; npm i -g vscode-html-languageserver-bin
-           css-mode        ;; npm i -g vscode-css-languageserver-bin
-           json-mode       ;; npm i -g vscode-json-languageserver
-           ) . eglot-ensure))
+(use-package lsp-mode
+  :ensure t
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp
   :custom
-  (eglot-workspace-configuration
-    '((:gopls .
-        ((staticcheck . t)
-         (usePlaceholders . t)))))
-  :config
-  (add-to-list 'eglot-stay-out-of 'company))
+  (lsp-keymap-prefix "C-c l")
+  (lsp-enable-snippet nil))
+
+(use-package consult-lsp
+    :ensure t)
+
+;; dap-mode emacs-lsp.github.io/dap-mode
+;; GO requires https://github.com/go-delve/delve/tree/master/Documentation/installation
+(use-package dap-mode
+  :ensure t
+  :hook (go-mode . (lambda () (require 'dap-dlv-go))))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 ;;
 ;; go-mode
@@ -155,15 +157,11 @@
   :mode (("\\go.mod\\'"  . go-dot-mod-mode)
          ("\\go.work\\'" . go-dot-work-mode))
   :bind ("TAB" . m/indent-or-insert-tab)
-  :custom
-  (gofmt-command "goimports")
-  :hook ((before-save . gofmt-before-save)
-         ;; (before-save . (lambda () (call-interactively 'eglot-code-action-organize-imports)))
-         (before-save . eglot-format-buffer)))
-
-(use-package flymake-golangci
-  :ensure t
-  :hook (go-mode . flymake-golangci-load))
+  :hook (((go-mode
+           go-dot-mod-mode
+           go-dot-work-mode) . lsp)
+         (before-save . lsp-organize-imports)
+         (before-save . lsp-format-buffer)))
 
 ;;
 ;; c/c++-mode
