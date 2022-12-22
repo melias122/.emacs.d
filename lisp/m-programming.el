@@ -74,7 +74,15 @@
 (use-package editorconfig
   :ensure t
   :delight " EC"
-  :hook (after-init . editorconfig-mode))
+  :hook (after-init . editorconfig-mode)
+  :custom
+  (editorconfig-trim-whitespaces-mode 'ws-butler-mode)
+  :config
+  (use-package ws-butler)
+
+  ;; https://github.com/doomemacs/doomemacs/blob/master/modules/tools/editorconfig/config.el
+  (add-to-list 'editorconfig-exclude-regexps
+               "\\.\\(zip\\|\\(doc\\|xls\\|ppt\\)x\\)\\'"))
 
 (use-package simple
   :custom (backward-delete-char-untabify-method nil)
