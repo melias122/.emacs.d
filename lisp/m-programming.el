@@ -44,6 +44,14 @@
 ;; proto syntax highlighting
 (use-package protobuf-mode
   :ensure t
+  :init
+  (defconst m/protobuf-style
+    '((c-basic-offset . 2)
+       (indent-tabs-mode . nil)))
+
+  (add-hook 'protobuf-mode-hook
+    (lambda () (c-add-style "m/protobuf-style" m/protobuf-style t)))
+
   :mode "\\.proto\\'")
 
 ;; yaml syntax highlighting
