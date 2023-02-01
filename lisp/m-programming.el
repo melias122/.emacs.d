@@ -146,7 +146,15 @@
 ;;
 (use-package lsp-mode
   :ensure t
-  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :init
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
+         ((go-mode
+           go-dot-mod-mode
+           go-dot-work-mode) . lsp)
+         (go-mode . lsp-go-install-save-hooks))
   :commands lsp
   :custom
   (lsp-keymap-prefix "C-c l")
@@ -172,12 +180,7 @@
   :ensure t
   :mode (("\\go.mod\\'"  . go-dot-mod-mode)
          ("\\go.work\\'" . go-dot-work-mode))
-  :bind ("TAB" . m/indent-or-insert-tab)
-  :hook (((go-mode
-           go-dot-mod-mode
-           go-dot-work-mode) . lsp)
-         (before-save . lsp-organize-imports)
-         (before-save . lsp-format-buffer)))
+  :bind ("TAB" . m/indent-or-insert-tab))
 
 ;;
 ;; c/c++-mode
