@@ -156,7 +156,10 @@
   :hook ((lsp-mode . lsp-enable-which-key-integration)
          ((go-mode
            go-dot-mod-mode
-           go-dot-work-mode) . lsp)
+           go-dot-work-mode
+           typescript-mode
+           javascript-mode
+           csharp-mode) . lsp)
          (go-mode . lsp-go-install-save-hooks))
   :commands lsp
   :custom
