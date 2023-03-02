@@ -33,10 +33,14 @@
 (use-package savehist
   :hook (after-init . savehist-mode))
 
+(use-package ctrlf
+  :ensure t
+  :bind (("C-s"   . ctrlf-forward-fuzzy)
+         ("C-M-s" . ctrlf-backward-fuzzy)))
+
 (use-package consult
   :ensure t
-  :bind (("C-s" . consult-line)
-         ("C-r" . consult-ripgrep)
+  :bind (("C-r"   . consult-ripgrep)
          ("C-x b" . consult-buffer))
   :init
   ;; Optionally tweak the register preview window.
