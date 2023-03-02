@@ -1,6 +1,9 @@
 ;;
 ;; syntax
 ;;
+(use-package csharp-mode
+  :ensure t
+  :mode "\\.cs\\'")
 
 (use-package graphql-mode
   :ensure t
