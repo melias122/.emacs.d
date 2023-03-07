@@ -16,6 +16,7 @@
      gc-cons-percentage (car (get 'gc-cons-threshold 'standard-value)))))
 
 (setq native-comp-async-report-warnings-errors 'silent)
+(setq read-process-output-max (* 1024 1024)) ;; for lsp
 
 (let ((file-name-handler-alist nil))
   (add-to-list 'load-path "~/.emacs.d/lisp")

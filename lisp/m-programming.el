@@ -150,6 +150,10 @@
 (use-package lsp-mode
   :ensure t
   :init
+  (with-eval-after-load 'lsp-mode
+    ;; do not watch go vendor directory
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'"))
+
   (defun lsp-go-install-save-hooks ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t))
@@ -159,7 +163,8 @@
            go-dot-work-mode
            typescript-mode
            javascript-mode
-           csharp-mode) . lsp)
+           csharp-mode
+           python-mode) . lsp)
          (go-mode . lsp-go-install-save-hooks))
   :commands lsp
   :custom
