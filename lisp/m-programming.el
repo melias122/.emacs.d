@@ -108,8 +108,9 @@
   (tab-width 4)
   :config
   ;; https://github.com/doomemacs/doomemacs/blob/master/modules/tools/editorconfig/config.el
-  (add-to-list 'editorconfig-exclude-regexps
-               "\\.\\(zip\\|\\(doc\\|xls\\|ppt\\)x\\)\\'"))
+  ;; (add-to-list 'editorconfig-exclude-regexps
+  ;; "\\.\\(zip\\|\\(doc\\|xls\\|ppt\\)x\\)\\'")
+  )
 
 (use-package simple
   :custom (backward-delete-char-untabify-method nil)
@@ -181,12 +182,13 @@
            javascript-mode
            csharp-mode
            python-mode
-           zig-mode) . lsp)
+           zig-mode) . lsp-deferred)
          (go-mode . lsp-go-install-save-hooks))
   :commands lsp
   :custom
   (lsp-keymap-prefix "C-c l")
-  (lsp-enable-snippet nil))
+  (lsp-enable-snippet nil)
+  (lsp-auto-guess-root t))
 
 (use-package consult-lsp
   :ensure t
