@@ -1,6 +1,18 @@
 ;;
 ;; syntax
 ;;
+
+(use-package terraform-mode
+  :ensure t)
+
+(use-package zig-mode
+  :ensure t
+  :mode "\\.zig\\'")
+
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
+
 (use-package csharp-mode
   :ensure t
   :mode "\\.cs\\'")
@@ -82,15 +94,19 @@
 ;;
 ;; editing
 ;;
+(use-package ws-butler
+  :ensure t
+  :hook ((text-mode . ws-butler-mode)
+         (prog-mode . ws-butler-mode)))
+
 (use-package editorconfig
   :ensure t
   :delight " EC"
   :hook (after-init . editorconfig-mode)
   :custom
   (editorconfig-trim-whitespaces-mode 'ws-butler-mode)
+  (tab-width 4)
   :config
-  (use-package ws-butler)
-
   ;; https://github.com/doomemacs/doomemacs/blob/master/modules/tools/editorconfig/config.el
   (add-to-list 'editorconfig-exclude-regexps
                "\\.\\(zip\\|\\(doc\\|xls\\|ppt\\)x\\)\\'"))
@@ -164,7 +180,8 @@
            typescript-mode
            javascript-mode
            csharp-mode
-           python-mode) . lsp)
+           python-mode
+           zig-mode) . lsp)
          (go-mode . lsp-go-install-save-hooks))
   :commands lsp
   :custom
