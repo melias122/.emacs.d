@@ -245,4 +245,7 @@
 (use-package restclient
   :ensure t)
 
+;; Compilation output
+(setq compilation-scroll-output t)
+
 (provide 'm-programming)
