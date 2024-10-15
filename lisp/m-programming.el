@@ -189,7 +189,9 @@
   (lsp-enable-snippet nil))
 
 (use-package consult-lsp
-    :ensure t)
+  :ensure t
+  :config
+  (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
 
 ;; dap-mode emacs-lsp.github.io/dap-mode
 ;; GO requires https://github.com/go-delve/delve/tree/master/Documentation/installation
