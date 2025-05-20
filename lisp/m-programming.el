@@ -252,4 +252,9 @@
 ;; Compilation output
 (setq compilation-scroll-output t)
 
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+        :rev :newest
+        :branch "main"))
+
 (provide 'm-programming)
