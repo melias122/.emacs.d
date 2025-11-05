@@ -9,7 +9,6 @@
   (inhibit-startup-screen 1)
   :config
   (when (memq window-system '(mac ns))
-    (set-default-font "Monaco 13")
     ;; Make mac keyboard bindings not suck
     (setq mac-option-modifier 'super)
     (setq mac-command-modifier 'meta))

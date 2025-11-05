@@ -1,7 +1,6 @@
 (use-package magit
-  :ensure t
-  :bind ("C-x g" . magit-status)
-  :custom (magit-bind-magit-project-status nil))
+ :ensure t
+ :bind ("C-x g" . magit-status))
 
 (use-package project
   :bind-keymap ("C-c p" . project-prefix-map)
