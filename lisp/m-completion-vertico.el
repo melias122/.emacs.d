@@ -23,7 +23,12 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (completion-category-overrides '((file (styles partial-completion))
+                                   ;; overrides lsp-mode's `lsp-passthrough' style,
+                                   ;; which never prefix-expands and so inserts
+                                   ;; nothing when the server returns a single
+                                   ;; candidate (e.g. the last struct field)
+                                   (lsp-capf (styles orderless basic)))))
 
 ;; Minibuffer history
 (use-package savehist
