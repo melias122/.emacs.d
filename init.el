@@ -8,12 +8,9 @@
   gc-cons-threshold most-positive-fixnum
   gc-cons-percentage 0.6)
 
-(add-hook
- 'after-init-hook
- (lambda ()
-   (setq
-     gc-cons-threshold (* 1024 1024) ;; 1mb
-     gc-cons-percentage (car (get 'gc-cons-threshold 'standard-value)))))
+;; `gcmh-mode' manages gc-cons-threshold from here on; just restore the
+;; percentage to its default.
+(add-hook 'after-init-hook (lambda () (setq gc-cons-percentage 0.1)))
 
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq read-process-output-max (* 1024 1024)) ;; for lsp

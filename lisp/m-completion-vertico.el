@@ -23,11 +23,7 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))
-                                   ;; enable initialism by default for symbols
-                                   (command (styles +orderless-with-initialism))
-                                   (variable (styles +orderless-with-initialism))
-                                   (symbol (styles +orderless-with-initialism))))
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Minibuffer history
 (use-package savehist
@@ -60,11 +56,6 @@
   (xref-show-definitions-function 'consult-xref)
   (xref-search-program            'ripgrep)
   (xref-prompt-for-identifier     nil)
-
-  ;; Use project.el with consult
-  (consult-project-root-function (lambda ()
-                                   (when-let (project (project-current))
-                                     (car (project-roots project)))))
 
   ;; Use `consult-completion-in-region' if Vertico is enabled.
   ;; Otherwise use the default `completion--in-region' function.

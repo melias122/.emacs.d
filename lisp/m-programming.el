@@ -3,7 +3,8 @@
 ;;
 
 (use-package terraform-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package zig-mode
   :ensure t
@@ -13,15 +14,9 @@
   :ensure t
   :mode "\\.rs\\'")
 
-(use-package csharp-mode
-  :ensure t
-  :mode "\\.cs\\'")
-
 (use-package graphql-mode
   :ensure t
-  :mode "\\.graphqls\\'"
-  :config
-  (setq-local indent-line-function nil))
+  :mode "\\.graphqls\\'")
 
 (use-package nix-mode
   :ensure t
@@ -30,9 +25,7 @@
 (use-package typescript-mode
   :ensure t
   :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.js\\'" . typescript-mode))
-  :config
-  (define-derived-mode tsx-mode typescript-mode "tsx-mode"))
+         ("\\.js\\'" . typescript-mode)))
 
 (use-package web-mode
   :ensure t
@@ -71,17 +64,15 @@
 
 ;; yaml syntax highlighting
 (use-package yaml-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
   :mode ( ("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
-          ("\\.markdown\\'" . markdown-mode))
-  :custom (markdown-command "multimarkdown")
-  :config
-  (use-package flymd :ensure t))
+          ("\\.markdown\\'" . markdown-mode)))
 
 ;; json syntax highlighting
 (use-package json-mode
@@ -89,7 +80,8 @@
   :mode "\\.json\\'")
 
 (use-package dockerfile-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;;
 ;; editing
@@ -134,7 +126,6 @@
   :hook (prog-mode . show-paren-mode))
 
 (use-package hl-line
-  :ensure t
   :hook (after-init . global-hl-line-mode))
 
 ;;
@@ -146,10 +137,12 @@
   :hook (prog-mode . yas-minor-mode-on))
 
 (use-package yasnippet-snippets
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package consult-yasnippet
   :ensure t
+  :defer t
   :init
   (defun m/setup-consult-yas-capf ()
     (setq-local completion-at-point-functions
@@ -192,13 +185,15 @@
 
 (use-package consult-lsp
   :ensure t
-  :config
-  (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
+  :after lsp-mode
+  :bind (:map lsp-mode-map ([remap xref-find-apropos] . consult-lsp-symbols)))
 
 ;; dap-mode emacs-lsp.github.io/dap-mode
 ;; GO requires https://github.com/go-delve/delve/tree/master/Documentation/installation
 (use-package dap-mode
   :ensure t
+  ;; the lambda hook can't imply deferral, so be explicit about it
+  :defer t
   :hook (go-mode . (lambda () (require 'dap-dlv-go))))
 
 (use-package flycheck
@@ -216,7 +211,7 @@
   :ensure t
   :mode (("\\go.mod\\'"  . go-dot-mod-mode)
          ("\\go.work\\'" . go-dot-work-mode))
-  :bind ("TAB" . m/indent-or-insert-tab))
+  :bind (:map go-mode-map ("TAB" . m/indent-or-insert-tab)))
 
 ;;
 ;; c/c++-mode
@@ -251,14 +246,10 @@
   :hook (after-init . exec-path-from-shell-initialize))
 
 (use-package restclient
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; Compilation output
 (setq compilation-scroll-output t)
-
-(use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-        :rev :newest
-        :branch "main"))
 
 (provide 'm-programming)

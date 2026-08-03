@@ -41,7 +41,6 @@
   (doom-themes-org-config))
 
 (use-package which-key
-  :ensure t
   :diminish
   :hook (after-init . which-key-mode))
 
@@ -55,7 +54,7 @@
   (dired-dwim-target t)
 
   ;; Revert/refresh dired when something changes
-  (global-auto-revent-non-file-buffers t))
+  (global-auto-revert-non-file-buffers t))
 
 ;; Revert buffers when underlying file changed
 (global-auto-revert-mode 1)
