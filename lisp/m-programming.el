@@ -128,28 +128,6 @@
 (use-package hl-line
   :hook (after-init . global-hl-line-mode))
 
-;;
-;; completion & snippets
-;;
-(use-package yasnippet
-  :ensure t
-  :diminish yas-minor-mode
-  :hook (prog-mode . yas-minor-mode-on))
-
-(use-package yasnippet-snippets
-  :ensure t
-  :defer t)
-
-(use-package consult-yasnippet
-  :ensure t
-  :defer t
-  :init
-  (defun m/setup-consult-yas-capf ()
-    (setq-local completion-at-point-functions
-      (cons #'consult-yasnippet
-        completion-at-point-functions)))
-  (add-hook 'prog-mode-hook 'm/setup-consult-yas-capf))
-
 (use-package eldoc
   :diminish
   :hook (prog-mode . eldoc-mode))
