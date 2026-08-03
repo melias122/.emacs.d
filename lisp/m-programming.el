@@ -203,6 +203,10 @@
 
 (use-package flycheck
   :ensure t
+  :custom
+  ;; No checker supports *scratch*: emacs-lisp-checkdoc doesn't handle
+  ;; lisp-interaction-mode, and the byte-compile checker needs a trusted file.
+  (flycheck-global-modes '(not lisp-interaction-mode))
   :init (global-flycheck-mode))
 
 ;;
