@@ -135,44 +135,40 @@
 ;;
 ;; Language Server Protocol (LSP)
 ;;
-(use-package lsp-mode
-  :ensure t
+(use-package eglot
   :init
-  (with-eval-after-load 'lsp-mode
-    ;; do not watch go vendor directory
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'"))
+  (defun m/eglot-go-before-save ()
+    (when (eglot-managed-p)
+      (eglot-format-buffer)
+      ;; `eglot-code-action-organize-imports' signals an error when gopls
+      ;; offers no action (imports already organized); don't abort the save
+      (ignore-errors
+        (eglot-code-action-organize-imports (point-min) (point-max)))))
 
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
-         ((go-mode
+  (defun m/eglot-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'m/eglot-go-before-save t t))
+  :hook (((go-mode
            go-dot-mod-mode
            go-dot-work-mode
            typescript-mode
            javascript-mode
            csharp-mode
            python-mode
-           zig-mode) . lsp-deferred)
-         (go-mode . lsp-go-install-save-hooks))
-  :commands lsp
-  :custom
-  (lsp-keymap-prefix "C-c l")
-  (lsp-enable-snippet nil)
-  (lsp-auto-guess-root t))
+           zig-mode) . eglot-ensure)
+         (go-mode . m/eglot-go-install-save-hooks))
+  :bind (:map eglot-mode-map
+              ("C-c l r" . eglot-rename)
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l f" . eglot-format)
+              ("C-c l o" . eglot-code-action-organize-imports)
+              ("C-c l i" . eglot-find-implementation)
+              ("C-c l t" . eglot-find-typeDefinition)
+              ("M-i"     . eglot-find-implementation)))
 
-(use-package consult-lsp
+(use-package consult-eglot
   :ensure t
-  :after lsp-mode
-  :bind (:map lsp-mode-map ([remap xref-find-apropos] . consult-lsp-symbols)))
-
-;; dap-mode emacs-lsp.github.io/dap-mode
-;; GO requires https://github.com/go-delve/delve/tree/master/Documentation/installation
-(use-package dap-mode
-  :ensure t
-  ;; the lambda hook can't imply deferral, so be explicit about it
-  :defer t
-  :hook (go-mode . (lambda () (require 'dap-dlv-go))))
+  :after eglot
+  :bind (:map eglot-mode-map ([remap xref-find-apropos] . consult-eglot-symbols)))
 
 (use-package flycheck
   :ensure t
@@ -181,6 +177,13 @@
   ;; lisp-interaction-mode, and the byte-compile checker needs a trusted file.
   (flycheck-global-modes '(not lisp-interaction-mode))
   :init (global-flycheck-mode))
+
+;; Route eglot diagnostics through flycheck instead of flymake
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 ;;
 ;; go-mode
