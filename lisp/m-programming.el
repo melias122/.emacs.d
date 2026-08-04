@@ -128,6 +128,28 @@
 (use-package hl-line
   :hook (after-init . global-hl-line-mode))
 
+;; Inline ghost-text preview of the top completion candidate; TAB accepts,
+;; M-n/M-p cycle candidates. In-buffer complement to C-M-i completion.
+(use-package completion-preview
+  :hook (prog-mode . completion-preview-mode)
+  :custom (completion-preview-minimum-symbol-length 2))
+
+;; dabbrev matches case-insensitively but must not downcase what it inserts
+(use-package dabbrev
+  :defer t
+  :custom (dabbrev-case-replace nil))
+
+(use-package cape
+  :ensure t
+  :defer t
+  :init
+  ;; re-query the server while narrowing instead of filtering a stale cache
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  ;; when eglot has no matches, fall through to the capfs below
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
+
 (use-package eldoc
   :diminish
   :hook (prog-mode . eldoc-mode))
@@ -156,6 +178,15 @@
            python-mode
            zig-mode) . eglot-ensure)
          (go-mode . m/eglot-go-install-save-hooks))
+  :custom
+  ;; manage files jumped to via xref outside the project (go stdlib, module cache)
+  (eglot-extend-to-xref t)
+  ;; shut the server down when the last managed buffer is killed
+  (eglot-autoshutdown t)
+  ;; don't block on file open while the server boots
+  (eglot-sync-connect nil)
+  ;; don't log LSP traffic to the events buffer; set back to 2000000 to debug
+  (eglot-events-buffer-config '(:size 0))
   :bind (:map eglot-mode-map
               ("C-c l r" . eglot-rename)
               ("C-c l a" . eglot-code-actions)
