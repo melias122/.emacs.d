@@ -116,6 +116,9 @@
   ;; Vertico commands are hidden in normal buffers.
   (read-extended-command-predicate 'command-completion-default-include-p)
 
+  ;; Case-insensitive completion-at-point matching
+  (completion-ignore-case t)
+
   ;; Enable recursive minibuffers
   (enable-recursive-minibuffers t))
 
