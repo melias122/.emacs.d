@@ -18,6 +18,18 @@
   ;; `magit-uniquify-buffer-names', magit uses the project's full path as
   ;; its name, preventing such naming collisions.
   (magit-uniquify-buffer-names nil)
+
+  ;; Show the status buffer in the frame's leftmost window; other magit
+  ;; buffers (diffs, logs, ...) keep the default behavior.
+  (magit-display-buffer-function #'m/magit-display-buffer-left)
+  :init
+  (defun m/magit-display-buffer-left (buffer)
+    (if (with-current-buffer buffer (derived-mode-p 'magit-status-mode))
+        (display-buffer buffer '((display-buffer-reuse-window
+                                  display-buffer-in-direction)
+                                 (direction . leftmost)
+                                 (window-width . 0.5)))
+      (magit-display-buffer-traditional buffer)))
   :bind ("C-x g" . magit-status))
 
 (use-package project
