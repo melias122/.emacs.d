@@ -17,6 +17,40 @@
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+;; Sort tests, mocks and generated files to the bottom of grep (C-r) and
+;; xref (M-?, M-i) results. Candidates look like "file:line: match", so the
+;; file part is everything before the first colon.
+(defvar m/demoted-file-regexp
+  (rx (or "_test.go" "_mock.go" ".pb.go" "_gen.go" ".gen.go"
+          "zz_generated" "_string.go"
+          (seq (or bos "/") "mock")))
+  "Files matched by this sink to the bottom of grep/xref results.")
+
+(defun m/demoted-candidate-p (cand)
+  (let ((end (string-search ":" cand)))
+    (string-match-p m/demoted-file-regexp
+                    (substring cand 0 (or end (length cand))))))
+
+(defun m/vertico-sort-demoted-last (candidates)
+  "Keep CANDIDATES in arrival order, but demoted files last."
+  (nconc (seq-remove #'m/demoted-candidate-p candidates)
+         (seq-filter #'m/demoted-candidate-p candidates)))
+
+(use-package vertico-multiform
+  :after vertico
+  :init (vertico-multiform-mode)
+  :custom
+  (vertico-multiform-categories
+   '((consult-grep (vertico-sort-override-function . m/vertico-sort-demoted-last))
+     (consult-xref (vertico-sort-override-function . m/vertico-sort-demoted-last))))
+  ;; consult-project-extra is multi-source (category `multi-category'), so
+  ;; scope by command instead of category to leave consult-buffer alone
+  (vertico-multiform-commands
+   '((consult-project-extra-find
+      (vertico-sort-override-function . m/vertico-sort-demoted-last))
+     (consult-project-extra-find-other-window
+      (vertico-sort-override-function . m/vertico-sort-demoted-last)))))
+
 ;; Orderless completion style
 (use-package orderless
   :ensure t

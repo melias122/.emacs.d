@@ -15,6 +15,31 @@
 
   (defalias 'yes-or-no-p 'y-or-n-p))
 
+;; Predictable buffer placement:
+;; - automatic splits are always side-by-side (when the window is wide
+;;   enough), never below; otherwise an existing window is reused
+;; - transient buffers (help, compilation/grep, flycheck list, eldoc)
+;;   share a single bottom panel instead of popping up arbitrarily
+(use-package window
+  :custom
+  (split-height-threshold nil)
+  (split-width-threshold 160)
+  ;; make C-x b and friends follow display-buffer-alist too
+  (switch-to-buffer-obey-display-actions t)
+  ;; side windows are dedicated; pop elsewhere instead of erroring when
+  ;; switching buffers from one
+  (switch-to-buffer-in-dedicated-window 'pop)
+  ;; focus the help window on open, so q closes it right away (help.el var)
+  (help-window-select t)
+  (display-buffer-alist
+   '(((or (derived-mode . help-mode)
+          (derived-mode . compilation-mode) ; grep-mode derives from it
+          (derived-mode . flycheck-error-list-mode)
+          "\\`\\*eldoc")
+      (display-buffer-in-side-window)
+      (side . bottom)
+      (window-height . 0.3)))))
+
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 

@@ -23,9 +23,21 @@
   ;; buffers (diffs, logs, ...) keep the default behavior.
   (magit-display-buffer-function #'m/magit-display-buffer-left)
   :init
+  (defun m/display-buffer-reuse-left-magit-window (buffer alist)
+    "Replace the buffer of a left-edge magit-status window with BUFFER."
+    (when-let* ((win (seq-find
+                      (lambda (w)
+                        (and (window-at-side-p w 'left)
+                             (with-current-buffer (window-buffer w)
+                               (derived-mode-p 'magit-status-mode))))
+                      (window-list))))
+      (window--display-buffer buffer win 'reuse alist)))
+
   (defun m/magit-display-buffer-left (buffer)
     (if (with-current-buffer buffer (derived-mode-p 'magit-status-mode))
-        (display-buffer buffer '((display-buffer-reuse-window
+        ;; replace an existing left-edge status window in place; only when
+        ;; none exists, open a fresh leftmost window
+        (display-buffer buffer '((m/display-buffer-reuse-left-magit-window
                                   display-buffer-in-direction)
                                  (direction . leftmost)
                                  (window-width . 0.5)))
