@@ -105,6 +105,38 @@
                                             #'completion--in-region)
                                      args)))
   :config
+  ;; Preview candidates (M-?, C-r, ...) in the window the command was
+  ;; invoked from. Consult by default previews in whatever window
+  ;; already shows the target buffer, so with several windows the
+  ;; preview jumps to another window while RET lands in the current
+  ;; one.
+  (defun m/consult--jump-ensure-buffer (pos)
+    "Show the buffer of marker POS in the selected window.
+Unlike the original, never select another window."
+    (or (not (markerp pos))
+        (when-let* ((buf (marker-buffer pos)))
+          (unless (and (eq (current-buffer) buf) (eq (window-buffer) buf))
+            (consult--buffer-action buf 'norecord))
+          t)))
+  (advice-add #'consult--jump-ensure-buffer :override #'m/consult--jump-ensure-buffer)
+
+  ;; ... and put the window's original buffer back when the preview
+  ;; ends. Consult only restores point/narrowing (see the TODO above
+  ;; `consult--jump-preview'), which would leave the last previewed
+  ;; buffer in the window on C-g.
+  (defun m/consult--jump-preview-restore-buffer (fun)
+    (let ((preview (funcall fun)) win buf)
+      (lambda (action cand)
+        (when (eq action 'setup)
+          (setq win (selected-window)
+                buf (window-buffer win)))
+        (funcall preview action cand)
+        (when (and (eq action 'preview) (null cand)
+                   (window-live-p win) (buffer-live-p buf)
+                   (not (eq (window-buffer win) buf)))
+          (set-window-buffer win buf)))))
+  (advice-add #'consult--jump-preview :around #'m/consult--jump-preview-restore-buffer)
+
   ;; Add previous search when pressing "C-s C-s"
   (defvar m/previous-search
     (let ((map (make-sparse-keymap)))
