@@ -1,4 +1,4 @@
-;; Packages are activated automatically before init; only add archives here.
+;; Packages are activated automatically before init; only add archives here.  -*- lexical-binding: t -*-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 

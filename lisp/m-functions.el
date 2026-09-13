@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 (defun json-to-single-line (beg end)
   "Collapse prettified json in region between BEG and END to a single line"
   (interactive "r")

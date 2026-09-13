@@ -1,4 +1,4 @@
-;; m's custom emacs configuration.
+;; m's custom emacs configuration.  -*- lexical-binding: t -*-
 ;;
 
 ;; A big contributor to startup times is garbage collection. We up the gc
