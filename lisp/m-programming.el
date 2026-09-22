@@ -2,6 +2,29 @@
 ;; syntax
 ;;
 
+;; Visit files in the built-in *-ts-mode instead of the classic mode and
+;; install a missing grammar on first visit.  Needs Emacs 31 built with
+;; tree-sitter; anything else keeps the classic modes.
+(use-package treesit
+  :if (and (>= emacs-major-version 31) (treesit-available-p))
+  :defer t
+  :custom
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes '(go-ts-mode go-mod-ts-mode go-work-ts-mode
+                           typescript-ts-mode tsx-ts-mode js-ts-mode
+                           rust-ts-mode yaml-ts-mode json-ts-mode
+                           dockerfile-ts-mode c-ts-mode c++-ts-mode
+                           c-or-c++-ts-mode python-ts-mode bash-ts-mode
+                           cmake-ts-mode))
+  :init
+  ;; MELPA mode names that `treesit-enabled-modes' doesn't remap
+  (dolist (m '((go-dot-mod-mode . go-mod-ts-mode)
+               (go-dot-work-mode . go-work-ts-mode)
+               (json-mode . json-ts-mode)))
+    (add-to-list 'major-mode-remap-alist m))
+  ;; typescript-mode claims .tsx too; send it to the tsx grammar instead
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
+
 (use-package terraform-mode
   :ensure t
   :defer t)
@@ -27,6 +50,11 @@
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.js\\'" . typescript-mode)))
 
+;; keep the indentation of `typescript-mode'
+(use-package typescript-ts-mode
+  :defer t
+  :custom (typescript-ts-indent-offset 4))
+
 (use-package web-mode
   :ensure t
   :mode (("\\.html\\'" . web-mode)
@@ -36,6 +64,7 @@
 (use-package prettier
   :ensure t
   :hook ((json-mode . prettier-mode)
+         (json-ts-mode . prettier-mode)
          (css-mode . prettier-mode)))
 
 ;; cmake syntax highlighting
@@ -78,6 +107,11 @@
 (use-package json-mode
   :ensure t
   :mode "\\.json\\'")
+
+;; keep the indentation of `json-mode'
+(use-package json-ts-mode
+  :defer t
+  :custom (json-ts-indent-offset 4))
 
 (use-package dockerfile-mode
   :ensure t
@@ -169,15 +203,23 @@
 
   (defun m/eglot-go-install-save-hooks ()
     (add-hook 'before-save-hook #'m/eglot-go-before-save t t))
+  ;; *-ts-mode doesn't run the hooks of the classic mode, so list both
   :hook (((go-mode
+           go-ts-mode
            go-dot-mod-mode
+           go-mod-ts-mode
            go-dot-work-mode
+           go-work-ts-mode
            typescript-mode
+           typescript-ts-mode
+           tsx-ts-mode
            javascript-mode
+           js-ts-mode
            csharp-mode
            python-mode
+           python-ts-mode
            zig-mode) . eglot-ensure)
-         (go-mode . m/eglot-go-install-save-hooks))
+         ((go-mode go-ts-mode) . m/eglot-go-install-save-hooks))
   :custom
   ;; manage files jumped to via xref outside the project (go stdlib, module cache)
   (eglot-extend-to-xref t)
@@ -225,6 +267,13 @@
          ("\\go.work\\'" . go-dot-work-mode))
   :bind (:map go-mode-map ("TAB" . m/indent-or-insert-tab)))
 
+(use-package go-ts-mode
+  :custom
+  ;; go-ts-mode indents by columns (default 8); match `tab-width' 4 so each
+  ;; level is one tab, as in go-mode
+  (go-ts-indent-offset 4)
+  :bind (:map go-ts-mode-map ("TAB" . m/indent-or-insert-tab)))
+
 ;;
 ;; c/c++-mode
 ;;
@@ -233,6 +282,12 @@
   (c-default-style "linux")
   (c-basic-offset 4)
   (backward-delete-char-untabify-method nil))
+
+(use-package c-ts-mode
+  :defer t
+  :custom
+  (c-ts-mode-indent-style 'linux)
+  (c-ts-indent-offset 4))
 
 ;; c++11 and beyond syntax highlighting
 (use-package modern-cpp-font-lock
