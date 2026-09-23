@@ -34,11 +34,19 @@
                       (window-list))))
       (window--display-buffer buffer win 'reuse alist)))
 
+  (defun m/display-buffer-reuse-leftmost-window (buffer alist)
+    "Show BUFFER in the leftmost window if the frame is split side by side."
+    (let ((win (frame-first-window)))
+      (unless (window-at-side-p win 'right)
+        (window--display-buffer buffer win 'reuse alist))))
+
   (defun m/magit-display-buffer-left (buffer)
     (if (with-current-buffer buffer (derived-mode-p 'magit-status-mode))
-        ;; replace an existing left-edge status window in place; only when
-        ;; none exists, open a fresh leftmost window
+        ;; replace an existing left-edge status window in place; otherwise
+        ;; reuse the leftmost window of a side-by-side split; only when the
+        ;; frame has no vertical split, open a fresh leftmost window
         (display-buffer buffer '((m/display-buffer-reuse-left-magit-window
+                                  m/display-buffer-reuse-leftmost-window
                                   display-buffer-in-direction)
                                  (direction . leftmost)
                                  (window-width . 0.5)))
