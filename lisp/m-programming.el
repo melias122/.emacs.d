@@ -272,7 +272,15 @@
   ;; go-ts-mode indents by columns (default 8); match `tab-width' 4 so each
   ;; level is one tab, as in go-mode
   (go-ts-indent-offset 4)
-  :bind (:map go-ts-mode-map ("TAB" . m/indent-or-insert-tab)))
+  :bind (:map go-ts-mode-map ("TAB" . m/indent-or-insert-tab))
+  :hook (go-ts-mode . m/go-ts-classic-faces)
+  :config
+  ;; highlight as go-mode did: calls colored like definitions, plain
+  ;; struct fields (doom-one makes them bold) and numbers
+  (defun m/go-ts-classic-faces ()
+    (treesit-font-lock-recompute-features '(function) '(number))
+    (face-remap-add-relative 'font-lock-function-call-face 'font-lock-function-name-face)
+    (face-remap-add-relative 'font-lock-property-name-face 'default)))
 
 ;;
 ;; c/c++-mode
